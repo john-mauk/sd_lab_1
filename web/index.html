@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eX: Lab One Home</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <!--<link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css"> -->
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
+    <script src="js/index.js"></script>
+
+</head>
+<body>
+<header>
+    <a href="index.html" id="logo">
+        <h1>eX</h1>
+    </a>
+</header>
+<nav>
+    <ul>
+        <li>
+            <button class="nav-button">Connect Device</button>
+        </li>
+        <li>
+            <button class="nav-button" id="contact-add-remove">Add/Remove Phone</button>
+        </li>
+    </ul>
+</nav>
+
+<div id="contact-modal" style="display:none">
+    <div id="contact-modal-content">
+        <span id="contact-modal-close">&times;</span>
+        <form id="contact-modal-form">
+            <ul>
+                <li>
+                    <p>Phone: </p>
+                    <input id="contact-modal-phone" name="contact-modal-phone" maxlength="10" placeholder="1234567890"
+                           required>
+                </li>
+                <li>
+                    <p>Carrier: </p>
+                    <select id="contact-modal-carrier" name="contact-modal-carrier" required>
+                        <option value="default" disabled selected>--Select Carrier--</option>
+                        <option>Verizon</option>
+                        <option>AT&T</option>
+                        <option>Sprint</option>
+                        <option>T-Mobile</option>
+                    </select>
+                </li>
+            </ul>
+        </form>
+        <ul>
+            <li>
+                <button class="modal-button" id="addContactButton" value="add">Add</button>
+                <button class="modal-button" id="removeContactButton" value="remove">Remove</button>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+</body>
+</html>
