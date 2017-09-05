@@ -11,11 +11,11 @@ public class Contacts {
     public static void main(String[] args) {
         //String phone = "6512109890";
         //String carrier = "AT&T";
-        //Connection con = ExDatabase.open();
+        Connection con = ExDatabase.open();
         //System.out.println("Contact was added: "+addContact(con,phone,carrier));
         //System.out.println("Contact was removed: "+removeContact(con,phone));
-        //System.out.println("Text Sent: "+SendTextMsg(con));
-        //ExDatabase.close(con);
+        System.out.println("Text Sent: "+SendTextMsg(con));
+        ExDatabase.close(con);
     }
 
     public Contacts() {
@@ -29,8 +29,9 @@ public class Contacts {
             con.setAutoCommit(false);
             stmt = con.createStatement();
             if (!checkContact(con, phone)) {
+                String carrierName = Carriers.lookup(carrier).getDomain();
                 String sql = "INSERT INTO contacts (contact_phone,contact_carrier,contact_domain)" +
-                        "VALUES ('" + phone + "','" + carrier + "','" + Carriers.lookup(carrier).domain + "');";
+                        "VALUES ('" + phone + "','" + carrier + "','" + Carriers.lookup(carrier).getDomain() + "');";
                 stmt.executeUpdate(sql);
             }
             stmt.close();
@@ -83,36 +84,18 @@ public class Contacts {
         final String adminUsername = "ex Design";
         final String adminEmail = "ex.design.solutions@gmail.com";
         final String adminPassword = "[Jamochame13]";
+        final String contents = "Temperature has increased by more than 10 Celsius.";
 
         try {
-            Properties properties = new Properties();
-
-            properties.put("mail.smtp.host", "smtp.gmail.com");
-            properties.put("mail.smtp.socketFactory.port", "465");
-            properties.put("mail.smtp.socketFactory.class",
-                    "javax.net.ssl.SSLSocketFactory");
-            properties.put("mail.smtp.auth", "true");
-            properties.put("mail.smtp.port", "465");
-
-            Authenticator authenticator = new Authenticator() {
-                public PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(adminEmail, adminPassword);
-                }
-            };
-
-            Session session = Session.getDefaultInstance(properties, authenticator);
-            Message msg = new MimeMessage(session);
+            Properties properties = setUpProperties();
+            Message msg = setUpMessage(properties,adminEmail,adminPassword);
 
             Statement stmt = null;
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM contacts;");
 
             while (rs.next()) {
-                msg.setFrom(new InternetAddress(adminUsername + "<" + adminEmail + ">"));
-                msg.setRecipient(Message.RecipientType.TO,
-                        new InternetAddress(rs.getString("contact_phone") + "@" + rs.getString("contact_domain")));
-                msg.setSubject("Lab One");
-                msg.setText("Temperature has changed by more than 10 Celsius!");
+                msg = setUpMessageContents(msg,rs,adminUsername,adminEmail,contents);
                 Transport.send(msg);
                 System.out.println("Sent text to: " + rs.getString("contact_phone"));
             }
@@ -125,8 +108,71 @@ public class Contacts {
         return true;
     }
 
+    public static boolean testContact(Connection con,String phone, String carrier){
+        final String adminUsername = "ex Design";
+        final String adminEmail = "ex.design.solutions@gmail.com";
+        final String adminPassword = "[Jamochame13]";
+        final String contents = "This is a test message";
+        try {
+            Properties properties = setUpProperties();
+            Message msg = setUpMessage(properties,adminEmail,adminPassword);
+
+            Statement stmt = null;
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM contacts WHERE contact_phone='"+phone+"';");
+
+            while (rs.next()) {
+                msg = setUpMessageContents(msg,rs,adminUsername,adminEmail,contents);
+                Transport.send(msg);
+                System.out.println("Sent text to: " + rs.getString("contact_phone"));
+            }
+
+        } catch (Exception ex) {
+            System.err.println("SendTextMsg: " + ex.getClass().getName() + ": " + ex.getMessage());
+            System.exit(0);
+            return false;
+        }
+        return true;
+    }
+
+    private static MimeMessage setUpMessage(Properties properties, String adminEmail, String adminPassword){
+        Authenticator authenticator = new Authenticator() {
+            public PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(adminEmail, adminPassword);
+            }
+        };
+
+        Session session = Session.getDefaultInstance(properties, authenticator);
+        return new MimeMessage(session);
+    }
+
+    private static Properties setUpProperties(){
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.socketFactory.port", "465");
+        prop.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.port", "465");
+        return prop;
+    }
+
+    private static Message setUpMessageContents(Message msg,ResultSet rs,String adminUsername, String adminEmail, String contents){
+        try {
+            msg.setFrom(new InternetAddress(adminUsername + "<" + adminEmail + ">"));
+            msg.setRecipient(Message.RecipientType.TO,
+                    new InternetAddress(rs.getString("contact_phone") + "@" + rs.getString("contact_domain")));
+            msg.setSubject("Lab One");
+            msg.setText(contents);
+        }catch(Exception ex){
+            System.err.println("Set Up Message Contents: " + ex.getClass().getName() + ": " + ex.getMessage());
+            System.exit(0);
+        }
+        return msg;
+    }
+
     private enum Carriers {
-        ATT("AT&T", "mms.att.net"),
+        ATT("ATT", "mms.att.net"),
         SPRINT("Sprint", "pm.sprint.com"),
         TMOBILE("T-Mobile", "tmomail.net"),
         USCELLULAR("U.S. Cellular", "mms.uscc.net"),
