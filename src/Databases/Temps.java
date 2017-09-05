@@ -10,6 +10,8 @@ public class Temps {
         Connection connection = null;
         try {
             connection = ExDatabase.open();
+            System.out.println("Uploaded Data: " + upLoadData(connection,tempDataGenerator()));
+            ExDatabase.close(connection);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -24,9 +26,11 @@ public class Temps {
         Random random = new Random();
 
         for(int ii = 0; ii < 300; ii++){
-            tempData[ii][0] = new SimpleDateFormat("yyyy-MM-dd  HH.mm.ss").format(new Date(System.currentTimeMillis() + 1000*ii));
+            tempData[ii][0] = new SimpleDateFormat("yyyy-MM-dd  HH.mm.ss").format(new Date(System.currentTimeMillis() + 1000*ii+ 5*3600000));
             tempData[ii][1] = Integer.toString(random.nextInt(73)-10);
         }
+        System.out.println("Date: " + tempData[0][0]);
+        System.out.println("Date: " + tempData[10][0]);
         return tempData;
     }//end tempDataGenerator
 
@@ -38,7 +42,7 @@ public class Temps {
             stat = con.createStatement();
             for(int ii = 0; ii < 300; ii++){
                 String sql = "INSERT into temps(temp_datetime, temp_c_val, temp_series_name) VALUES" +
-                    "('" + tempData[ii][0]+ "'," + tempData[ii][1] + "', testing);";
+                    "('" + tempData[ii][0]+ "'," + tempData[ii][1] + ", 'testing');";
                 stat.executeUpdate(sql);
             }//end for
             stat.close();
