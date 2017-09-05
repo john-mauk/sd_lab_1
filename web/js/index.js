@@ -17,6 +17,10 @@ $(function () {
             sendInfo("remove");
         }
     });
+
+    $("#testContactButton").click(function(){
+        sendInfo("test");
+    })
 });
 
 function viewContactModal() {
@@ -32,23 +36,22 @@ function sendInfo(action) {
     info += "p=" + document.getElementById("contact-modal-phone").value + "&";
     info += "c=" + document.getElementById("contact-modal-carrier").value;
 
-    $.post("Contact.Add", info,
+    $.post("Contact.AddRemoveTest", info,
         function (msg) {
             console.log(msg);
             if (msg === "added") {
                 console.log("added");
             } else if (msg === "removed") {
                 console.log("removed");
+            } else if (msg === "tested") {
+                console.log("tested");
             } else {
                 console.log("error");
             }
             closeContactModal();
         }
     );
-
     console.log("posted it");
-
-
 }
 
 
