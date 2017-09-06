@@ -6,8 +6,15 @@ import javax.mail.internet.MimeMessage;
 import java.sql.*;
 import java.util.Properties;
 
+/**
+ *
+ */
 public class Contacts {
 
+    /**
+     * Runs the methods throughout the class
+     * @param args
+     */
     public static void main(String[] args) {
         //String phone = "6512109890";
         //String carrier = "AT&T";

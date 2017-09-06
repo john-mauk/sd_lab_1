@@ -4,22 +4,24 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Temps {
 
     public static void main(String[] args) {
         Connection connection = null;
         try {
             connection = ExDatabase.open();
-            System.out.println("Removed Old Date: " + removeOldData(connection));
-            System.out.println("Uploaded Data: " + upLoadData(connection,tempDataGenerator()));
+            //System.out.println("Removed Old Date: " + removeOldData(connection));
+            //System.out.println("Uploaded Data: " + upLoadData(connection,tempDataGenerator()));
             ExDatabase.close(connection);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Temps() {
-    }
+    public Temps() {}
 
     //temp data generator
     private static String[][] tempDataGenerator(){
@@ -65,41 +67,4 @@ public class Temps {
 
     }//end upLoadData
 
-    private static boolean removeOldData(Connection con){
-        boolean removed = false;
-        Statement stmt = null;
-
-        try{
-            con.setAutoCommit(false);
-            stmt = con.createStatement();
-            Date currentTime = new Date(System.currentTimeMillis());
-            String sql = "Select * FROM temps WHERE temp_datetime<'"+currentTime+"';";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            int count = 0;
-
-            String sqlRemove="";
-            while(rs.next()){
-                if(count==0){
-                    sqlRemove ="DELETE FROM temps WHERE temp_id IN (";
-                    count++;
-                }else {
-                    sqlRemove = sqlRemove + rs.getString("temp_id") + ",";
-                }
-            }
-            if(count==1) {
-                sqlRemove = sqlRemove.substring(0, sqlRemove.length() - 1) + ");";
-                stmt.executeUpdate(sqlRemove);
-                stmt.close();
-            }
-            con.commit();
-            removed = true;
-        }catch(Exception ex){
-            System.err.println("Remove Old Data: " + ex.getClass().getName() + ": " + ex.getMessage());
-            System.exit(0);
-        }
-        return removed;
-    }
-
 }
-
