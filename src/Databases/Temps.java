@@ -27,17 +27,13 @@ public class Temps {
         Random random = new Random();
         long currentTime = System.currentTimeMillis();
 
-        for(int ii = 0; ii < 100; ii++){
+        for(int ii = 0; ii < 300; ii++){
             tempData[ii][0] = new SimpleDateFormat("yyyy-MM-dd  HH.mm.ss").format(new Date(currentTime + 1000*ii+ 5*3600000));
-            tempData[ii][1] = Integer.toString(random.nextInt(73)-10);
-        }
-        for(int ii = 100; ii < 200; ii++){
-            tempData[ii][0] = new SimpleDateFormat("yyyy-MM-dd  HH.mm.ss").format(new Date(currentTime + 1000*ii+ 5*3600000));
-            tempData[ii][1] = "null";
-        }
-        for(int ii = 200; ii < 300; ii++){
-            tempData[ii][0] = new SimpleDateFormat("yyyy-MM-dd  HH.mm.ss").format(new Date(currentTime + 1000*ii+ 5*3600000));
-            tempData[ii][1] = Integer.toString(random.nextInt(73)-10);
+            if(ii<100 || (ii>=200 && ii<300)){
+                tempData[ii][1] = Integer.toString(random.nextInt(73)-10);
+            }else if(ii>=100 && ii<200){
+                tempData[ii][1] = "null";
+            }
         }
         System.out.println("Date: " + tempData[0][0]);
         System.out.println("Date: " + tempData[10][0]);
