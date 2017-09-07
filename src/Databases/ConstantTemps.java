@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -38,12 +39,15 @@ public class ConstantTemps implements Runnable {
         System.out.println(removeOldData(con));
 
         while(keepRunning){
-            int rand = random.nextInt(73)-10;
             boolean needVal = true;
-
-            while(new Date(current+5*3600000+count*1000).compareTo(new Date(System.currentTimeMillis()+5*3600000))<0 && needVal){
-                constantTempUpload(con,current,rand,count);
-                if(new Date(current+5*3600000+count*1000).compareTo(new Date(System.currentTimeMillis() + 5*3600000))>0){
+            while(new Date(current+5*3600000+count*1000).compareTo(new Date(System.currentTimeMillis()+5*3600000+10*1000))<0 && needVal){
+                int rand = random.nextInt(80)-20;
+                if(rand<-10 || rand>62){
+                    constantTempUpload(con,current,"null",count);
+                }else{
+                    constantTempUpload(con,current,Integer.toString(rand),count);
+                }
+                if(new Date(current+5*3600000+count*1000).compareTo(new Date(System.currentTimeMillis() + 5*3600000+10*1000))>0){
                     needVal=false;
                 }else{
                     count++;
@@ -59,12 +63,11 @@ public class ConstantTemps implements Runnable {
                 System.err.println("While sleeping: " + ex.getClass().getName() + ": " + ex.getMessage());
                 System.exit(0);
             }
-            System.out.println(count);
         }
         ExDatabase.close(con);
     }
 
-    private static void constantTempUpload(Connection con, long current, int random, int count){
+    private static void constantTempUpload(Connection con, long current, String value, int count){
         String date = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date(current+5*3600000+count*1000));
 
         Statement stmt = null;
@@ -73,7 +76,7 @@ public class ConstantTemps implements Runnable {
             con.setAutoCommit(false);
             stmt = con.createStatement();
             stmt.executeUpdate("INSERT INTO temps(temp_datetime, temp_c_val,temp_series_name)" +
-                    "VALUES('"+date+"',"+random+",'Temps');");
+                    "VALUES('"+date+"',"+value+",'Temps');");
             stmt.close();
             con.commit();
         }catch(Exception ex){
