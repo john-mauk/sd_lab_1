@@ -36,11 +36,12 @@ public class ConstantTemps implements Runnable {
         int count=0;
 
         System.out.println(removeOldData(con));
+        removeOldData(con);
 
         while(keepRunning){
             boolean needVal = true;
             while(new Date(current+5*3600000+count*1000).compareTo(new Date(System.currentTimeMillis()+5*3600000+10*1000))<0 && needVal){
-                int rand = random.nextInt(80)-20;
+                int rand = random.nextInt(83)-20;
                 if(rand<-10 || rand>62){
                     constantTempUpload(con,current,"null",count);
                 }else{
