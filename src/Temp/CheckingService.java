@@ -25,7 +25,7 @@ public class CheckingService implements Runnable {
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.execute(test);
         } catch (Exception ex) {
-            System.out.println("Nope");
+            System.out.println("Not again");
         }
     }
 
