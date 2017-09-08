@@ -21,7 +21,7 @@ public class CheckingService implements Runnable {
 
     public static void main(String[] args) {
         try {
-            CheckingService test = new CheckingService(true, -7, 59);
+            CheckingService test = new CheckingService(true, -6, 58);
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.execute(test);
         } catch (Exception ex) {
