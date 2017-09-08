@@ -21,7 +21,7 @@ public class Contacts {
         Connection con = ExDatabase.open();
         //System.out.println("Contact was added: "+addContact(con,phone,carrier));
         //System.out.println("Contact was removed: "+removeContact(con,phone));
-        System.out.println("Text Sent: "+SendTextMsg(con));
+        System.out.println("Text Sent: "+sendTextMessage(con,"You are awesome!", "Success"));
         ExDatabase.close(con);
     }
 
@@ -87,11 +87,10 @@ public class Contacts {
         return removed;
     }
 
-    public static boolean SendTextMsg(Connection con) {
+    public static boolean sendTextMessage(Connection con, String contents, String subject) {
         final String adminUsername = "ex Design";
         final String adminEmail = "ex.design.solutions@gmail.com";
         final String adminPassword = "[Jamochame13]";
-        final String contents = "Temperature has increased by more than 10 Celsius.";
 
         try {
             Properties properties = setUpProperties();
@@ -102,7 +101,7 @@ public class Contacts {
             ResultSet rs = stmt.executeQuery("SELECT * FROM contacts;");
 
             while (rs.next()) {
-                msg = setUpMessageContents(msg,rs,adminUsername,adminEmail,contents);
+                msg = setUpMessageContents(msg,rs,adminUsername,adminEmail,contents,subject);
                 Transport.send(msg);
                 System.out.println("Sent text to: " + rs.getString("contact_phone"));
             }
@@ -120,6 +119,7 @@ public class Contacts {
         final String adminEmail = "ex.design.solutions@gmail.com";
         final String adminPassword = "[Jamochame13]";
         final String contents = "This is a test message";
+        final String subject = "Test";
         try {
             Properties properties = setUpProperties();
             Message msg = setUpMessage(properties,adminEmail,adminPassword);
@@ -129,7 +129,7 @@ public class Contacts {
             ResultSet rs = stmt.executeQuery("SELECT * FROM contacts WHERE contact_phone='"+phone+"';");
 
             while (rs.next()) {
-                msg = setUpMessageContents(msg,rs,adminUsername,adminEmail,contents);
+                msg = setUpMessageContents(msg,rs,adminUsername,adminEmail,contents, subject);
                 Transport.send(msg);
                 System.out.println("Sent text to: " + rs.getString("contact_phone"));
             }
@@ -164,12 +164,12 @@ public class Contacts {
         return prop;
     }
 
-    private static Message setUpMessageContents(Message msg,ResultSet rs,String adminUsername, String adminEmail, String contents){
+    private static Message setUpMessageContents(Message msg,ResultSet rs,String adminUsername, String adminEmail, String contents, String subject){
         try {
             msg.setFrom(new InternetAddress(adminUsername + "<" + adminEmail + ">"));
             msg.setRecipient(Message.RecipientType.TO,
                     new InternetAddress(rs.getString("contact_phone") + "@" + rs.getString("contact_domain")));
-            msg.setSubject("Lab One");
+            msg.setSubject(subject);
             msg.setText(contents);
         }catch(Exception ex){
             System.err.println("Set Up Message Contents: " + ex.getClass().getName() + ": " + ex.getMessage());
