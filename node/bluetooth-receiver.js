@@ -1,120 +1,89 @@
 var noble = require('noble');
-var async = require('async');
 
-function connectionCycle() {
-    noble.on('stateChange', function(state) {
-      if (state === 'poweredOn') {
-        noble.startScanning();
-      } else {
-        noble.stopScanning();
-      }
-    });
+var mysql      = require('mysql');
+var poolCluster = mysql.createPoolCluster();
+var connection = mysql.createConnection({
+  // host     : 'ex-design.cfilhwe2swqf.us-west-2.rds.amazonaws.com',
+  // user     : 'johnny',
+  // password : 'Jamochame13',
+  // database : 'ex_design_database'
 
-    noble.on('discover', function(peripheral) {
-        if(peripheral.id === "73fa3ac8893a49c49249e6ecc5ece5f0") {
-            explore(peripheral);
-        }
-    });
-}
+  host: 'ex-design.cfilhwe2swqf.us-west-2.rds.amazonaws.com',
+  user: 'johnny',
+  password: '[Jamochame13]',
+  port: '3306',
+  database : 'ex_design_database'
+});
 
-connectionCycle();
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
 
-function explore(peripheral) {
-  console.log('services and characteristics:');
+  console.log('connected as id ' + connection.threadId);
+});
 
-  peripheral.on('disconnect', function() {
-    process.exit(0);
-  });
+var serviceUuid = '6e400001b5a3f393e0a9e50e24dcca9e';
+var readUuid = '6e400003b5a3f393e0a9e50e24dcca9e';
+var writeUuid = '6e400002b5a3f393e0a9e50e24dcca9e';
 
-  peripheral.connect(function(error) {
-    peripheral.discoverServices([], function(error, services) {
-      var serviceIndex = 0;
+var readChar = null;
+var writeChar = null;
 
-      async.whilst(
-        function () {
-          return (serviceIndex < services.length);
-        },
-        function(callback) {
-          var service = services[serviceIndex];
-          var serviceInfo = service.uuid;
+noble.on('stateChange', function(state) {
+  if (state === 'poweredOn') {
+    noble.startScanning();
+  } else {
+    noble.stopScanning();
+  }
+});
 
-          if (service.name) {
-            serviceInfo += ' (' + service.name + ')';
-          }
-          console.log(serviceInfo);
+noble.on('discover', function(peripheral) {
+    if(peripheral.advertisement.localName === "Adafruit Bluefruit LE") {
+        peripheral.connect(function(error) {
+            console.log("connected");
+            noble.stopScanning();
 
-          service.discoverCharacteristics([], function(error, characteristics) {
-            var characteristicIndex = 0;
-
-            async.whilst(
-              function () {
-                return (characteristicIndex < characteristics.length);
-              },
-              function(callback) {
-                var characteristic = characteristics[characteristicIndex];
-                var characteristicInfo = '  ' + characteristic.uuid;
-
-                if (characteristic.name) {
-                  characteristicInfo += ' (' + characteristic.name + ')';
-                }
-
-                async.series([
-                  function(callback) {
-                    characteristic.discoverDescriptors(function(error, descriptors) {
-                      async.detect(
-                        descriptors,
-                        function(descriptor, callback) {
-                          return callback(descriptor.uuid === '2901');
-                        },
-                        function(userDescriptionDescriptor){
-                          if (userDescriptionDescriptor) {
-                            userDescriptionDescriptor.readValue(function(error, data) {
-                              if (data) {
-                                characteristicInfo += ' (' + data.toString() + ')';
-                              }
-                              callback();
-                            });
-                          } else {
-                            callback();
-                          }
+            peripheral.discoverServices([serviceUuid], function(error, services) {
+                services.forEach(function(service) {
+                    service.discoverCharacteristics(['6e400003b5a3f393e0a9e50e24dcca9e', '6e400002b5a3f393e0a9e50e24dcca9e'], function(err, characteristics) {
+                        characteristics.forEach(function(characteristic) {
+                            if(characteristic.uuid === readUuid) {
+                                readChar = characteristic;
+                                console.log('saved readChar');
+                            } else {
+                                writeChar = characteristic;
+                                console.log('saved writeChar');
+                            }
+                        });
+                        if(readChar && writeChar) {
+                            console.log('to readWriteData()');
+                            readWriteData();
                         }
-                      );
                     });
-                  },
-                  function(callback) {
-                        characteristicInfo += '\n    properties  ' + characteristic.properties.join(', ');
+                });
+            });
+        });
 
-                    if (characteristic.properties.indexOf('read') !== -1) {
-                      characteristic.read(function(error, data) {
-                        if (data) {
-                          var string = data.toString('ascii');
+        peripheral.once("disconnect", function() {
+            process.exit(0);
+        });
+    }
+});
 
-                          characteristicInfo += '\n    value       ' + data.toString('hex') + ' | \'' + string + '\'';
-                        }
-                        callback();
-                      });
-                    } else {
-                      callback();
-                    }
-                  },
-                  function() {
-                    console.log(characteristicInfo);
-                    characteristicIndex++;
-                    callback();
-                  }
-                ]);
-              },
-              function(error) {
-                serviceIndex++;
-                callback();
-              }
-            );
-          });
-        },
-        function (err) {
-          peripheral.disconnect();
-        }
-      );
+// for the database, you need <temp_datetime>, <temp_c_val>, <temp_series_name>
+// example: <'yyyy-mm-dd hh:mm:ss'>, <13>, <(const) Temps>
+
+function readWriteData() {
+    readChar.on('read', function(data, isNotification) {
+        console.log(data.toString());
+        poolCluster.add('temps', data.toString()); // add a named configuration
     });
-  });
+    readChar.subscribe(function(err) {
+        console.log('subscribed');
+    });
+    writeChar.write(function(){
+        asdfasdf
+    });
 }
