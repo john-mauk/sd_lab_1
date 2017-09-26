@@ -46,6 +46,7 @@ public class CheckingService implements Runnable {
             System.out.println("next check at count: " + count);
             checkTemps(con, current, count);
             try {
+
                 Thread.sleep(1000);
             } catch (Exception ex) {
                 System.out.println("While check service is sleeping");
@@ -75,11 +76,9 @@ public class CheckingService implements Runnable {
                             lastAlert = temp;
                             if(temp<low){
                                 Contacts.sendTextMsg(con,"The temperature has decreased below range at "+temp, "Temp too low" );
-
                                 System.out.println("Temp just became too low at "+temp);
                             }else{
                                 Contacts.sendTextMsg(con,"The temperature has increased above range at "+temp, "Temp too high");
-
                                 System.out.println("Temp just became too high at "+temp);
                             }
                         }else{
