@@ -1,0 +1,47 @@
+@media screen and (max-width: 480px) {
+    h1 {
+        background-color: #F0F8FF;
+        color: #000080;
+    }
+
+    h1 {
+        font-size: 30px;
+        font-weight: bold;
+        font-family: "Georgia"
+    }
+
+    #grafana-button {
+
+        text-align: center;
+        vertical-align: middle;
+        width: 40%;
+        margin: auto;
+        cursor: pointer;
+        display: block;
+    }
+
+    #grafana-button {
+        background-color: #6a5acd;
+        color: #ffffff;
+        box-shadow: 0 5px #666;
+    }
+
+    /*Colors for .nav-button*/
+    .nav-button {
+        background-color: #6a5acd;
+        color: #ffffff;
+    }
+
+    /*Attributes for .nav-button*/
+    .nav-button {
+        transform: translateY(4px)
+    }
+
+    #contact-add-remove {
+        diplay: block;
+        margin: auto;
+        padding: 12px 20px;
+        box-sizing: border-box;
+    }
+
+}

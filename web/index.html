@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>eX: Lab One Home</title>
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eX: Lab One: Home</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/normalize.css">
-    <!--<link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css"> -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
     <script src="js/index.js"></script>
@@ -15,25 +16,48 @@
 <body>
 <header>
     <a href="index.html" id="logo">
-        <h1>eX</h1>
+        <h1>Lab One</h1>
     </a>
+    <img src="web/circuitBackground.jpg" class = "pic" >
 </header>
 <nav>
     <ul>
+        <!--
         <li>
             <button class="nav-button">Connect Device</button>
         </li>
-        <li>
-            <button class="nav-button" id="contact-add-remove">Add/Remove Phone</button>
-        </li>
+        -->
         <li>
             <a href="https://exdesignsolutions.grafana.net/dashboard/db/temp-sensor?refresh=1s&orgId=1" id="grafana">
-                <button class="nav-button" id="grafana-button">Grafana Graph</button>
+               <div style = "text-align:center;">
+                <button class="nav-button" id="grafana-button" >Grafana Graph</button>
+                </div>
             </a>
+
         </li>
         <li>
-            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=1" width="450" height="500" frameborder="0"></iframe>
+                <form id =contact-add-remove>
+                    Phone:      <input type ="text" align = "left" name = "contact_phone" >
+                    <br>
+                    Carrier:    <input type = "text" name = "contact_carrier">
+                    <br>
+                    </form>
+            <!--<button class="nav-button" id="contact-add-remove">Add/Remove Phone</button>-->
         </li>
+        <li>
+            <form class = TempThreshold>
+                High:   <input type = "text" align = "left" name = "HighTemp">
+                <br>
+                Low:    <input type = "text" align = "left" name = " LowTemp">
+                <br>
+            </form>
+        </li>
+        <li>
+          <!--  <button class=""
+        </li>
+        <!--<li>
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=1" width="450" height="500" frameborder="0"></iframe>
+        </li>-->
     </ul>
 </nav>
 
