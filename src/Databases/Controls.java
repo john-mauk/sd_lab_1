@@ -23,7 +23,7 @@ public class Controls {
 
     public Controls() {}
 
-    private enum ControlType{
+    public enum ControlType{
         DISPLAY("Display"),
         PROBE("Probe"),
         CHECKINGSERVICE("CheckingService"),
@@ -41,16 +41,10 @@ public class Controls {
     }
 
     public static void toggleFor(Connection con, ControlType type){
-
         try{
             con.setAutoCommit(false);
-            Statement stmt = con.createStatement();
-            if(checkValue(con,type)==0){
-                updateValue(con,type,1);
-            }else{
-                updateValue(con,type,0);
-            }
-
+            updateValue(con,type,checkValue(con,type)==0 ? 1: 0);
+            con.commit();
         }catch(Exception ex){
             System.out.println("Toggle Display: "+ex.getMessage());
         }
