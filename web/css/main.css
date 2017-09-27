@@ -1,33 +1,35 @@
-    /*Colors for body*/
+    /*Attributes for body*/
     body {
-        background-color: #ffffff;
+        background-image: url("/img/blue-circuit-sunscreen.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
     }
+
     /*Colors for h1*/
     h1 {
-        background-color: #a7dbd8;
-        color: #000080;
+        color: #ffffff;
     }
     /*Attributes for h1*/
     h1 {
-        font-size: 20px;
+        font-size: 10px;
         font-weight: bold;
-        font-family: "Georgia"
+        font-family: "Georgia", Georgia, serif;
     }
     /*Attributes for p*/
     p {
-        font-size: 15px;
+        font-size: 10px;
         font-weight: bold;
-        font-family: "Georgia"
+        font-family: "Georgia", Georgia, serif;
     }
     /*Colors for p*/
     p{
-        color: #000080;
+        color: #ffffff;
     }
     /*Attributes for #grafana-button*/
     #grafana-button {
         text-align: center;
         vertical-align: middle;
-        width: 60%;
+        width: 50%;
         height: 20%;
         margin: auto;
         cursor: pointer;
@@ -35,7 +37,7 @@
     }
     /*Colors for #grafana-button, .nav-button, #editHigh, #editLow*/
     #grafana-button,.nav-button,#editHigh,#editLow {
-        background-color: #000080;
+        background-color: #008080;
         color: #ffffff;
     }
     /*Attributes for .nav-button*/
