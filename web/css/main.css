@@ -1,0 +1,54 @@
+    /*Colors for body*/
+    body {
+        background-color: #ffffff;
+    }
+    /*Colors for h1*/
+    h1 {
+        background-color: #a7dbd8;
+        color: #000080;
+    }
+    /*Attributes for h1*/
+    h1 {
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Georgia"
+    }
+    /*Attributes for p*/
+    p {
+        font-size: 15px;
+        font-weight: bold;
+        font-family: "Georgia"
+    }
+    /*Colors for p*/
+    p{
+        color: #000080;
+    }
+    /*Attributes for #grafana-button*/
+    #grafana-button {
+        text-align: center;
+        vertical-align: middle;
+        width: 60%;
+        height: 20%;
+        margin: auto;
+        cursor: pointer;
+        display: block;
+    }
+    /*Colors for #grafana-button, .nav-button, #editHigh, #editLow*/
+    #grafana-button,.nav-button,#editHigh,#editLow {
+        background-color: #000080;
+        color: #ffffff;
+    }
+    /*Attributes for .nav-button*/
+    .nav-button {
+        transform: translateY(4px)
+    }
+    /*Attributes for .Display, .startService*/
+    .Display,.startService {
+        diplay: block;
+        margin-right: 10px;
+        box-sizing: border-box;
+    }
+    /*attributes for selectors*/
+    #displayControls,#checkService,#contact-modal-carrier,#highText,#lowText,#contact-modal-phone{
+        font-size: 15px;
+    }
