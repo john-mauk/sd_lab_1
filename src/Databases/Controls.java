@@ -20,7 +20,6 @@ public class Controls {
             e.printStackTrace();
         }
     }
-
     public Controls() {}
 
     private enum ControlType{
@@ -84,5 +83,4 @@ public class Controls {
             System.out.println("Update Value for " + type + ": " + ex.getMessage());
         }
     }
-
 }

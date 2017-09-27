@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name ="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eX: Lab One: Home</title>
+    <title>eX: Lab One</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
@@ -16,9 +16,8 @@
 <body>
 <header>
     <a href="index.html" id="logo">
-        <h1>Lab One</h1>
+        <h1>Lab One: Temperature Sensor</h1>
     </a>
-    <img src="web/circuitBackground.jpg" class = "pic" >
 </header>
 <nav>
     <ul>
@@ -33,26 +32,65 @@
                 <button class="nav-button" id="grafana-button" >Grafana Graph</button>
                 </div>
             </a>
-
         </li>
         <li>
-                <form id =contact-add-remove>
-                    Phone:      <input type ="text" align = "left" name = "contact_phone" >
-                    <br>
-                    Carrier:    <input type = "text" name = "contact_carrier">
-                    <br>
-                    </form>
-            <!--<button class="nav-button" id="contact-add-remove">Add/Remove Phone</button>-->
-        </li>
-        <li>
-            <form class = TempThreshold>
-                High:   <input type = "text" align = "left" name = "HighTemp">
+            <form id="contact-modal-form" onsubmit="return false">
+                <ul>
+                    <li>
+                        <p>Phone: </p>
+                        <input id="contact-modal-phone" name="contact-modal-phone" maxlength="10" placeholder="1234567890"
+                               required>
+                    </li>
+                    <li>
+                        <p>Carrier: </p>
+                        <select id="contact-modal-carrier" name="contact-modal-carrier" required>
+                            <option value="default" disabled selected>--Select Carrier--</option>
+                            <option>Verizon</option>
+                            <option>ATT</option>
+                            <option>Sprint</option>
+                            <option>T-Mobile</option>
+                        </select>
+                    </li>
+                </ul>
+                <button class="nav-button" id = "addPhone">Add</button>
+                <button class="nav-button" id ="removePhone">Remove</button>
+                <button class="nav-button" id ="testPhone">Test</button>
                 <br>
-                Low:    <input type = "text" align = "left" name = " LowTemp">
+                <br>
+            </form>
+        </li>
+
+        <li>
+            <form class = TempThreshold onsubmit="return false">
+                <p>High:</p>   <input type = "text" id = "highText" align = "left" name = "HighTemp" maxlength="4">
+                <button id="editHigh">edit</button>
+                <br>
+                <p>Low:</p>    <input type = "text" id= "lowText" align = "left" name = " LowTemp" maxlength="4">
+                <button id="editLow">edit</button>
                 <br>
             </form>
         </li>
         <li>
+            <form  class = Display onsubmit="return false">
+                <p>Display:</p>
+                <select id="displayControls" name = "controls" required>
+                    <option value="default" disabled selected>--ON/OFF--</option>
+                    <option>ON</option>
+                    <option>OFF</option>
+                </select>
+            </form>
+        </li>
+        <li>
+            <form  class = startService onsubmit="return false">
+                <p>Check Service:</p>
+                <select id="checkService" name = "startCheckService" required>
+                    <option value="default" disabled selected>--ON/OFF--</option>
+                    <option>ON</option>
+                    <option>OFF</option>
+                </select>
+            </form>
+        </li>
+
           <!--  <button class=""
         </li>
         <!--<li>
@@ -61,37 +99,9 @@
     </ul>
 </nav>
 
-<div id="contact-modal" style="display:none">
-    <div id="contact-modal-content">
-        <span id="contact-modal-close">&times;</span>
-        <form id="contact-modal-form">
-            <ul>
-                <li>
-                    <p>Phone: </p>
-                    <input id="contact-modal-phone" name="contact-modal-phone" maxlength="10" placeholder="1234567890"
-                           required>
-                </li>
-                <li>
-                    <p>Carrier: </p>
-                    <select id="contact-modal-carrier" name="contact-modal-carrier" required>
-                        <option value="default" disabled selected>--Select Carrier--</option>
-                        <option>Verizon</option>
-                        <option>ATT</option>
-                        <option>Sprint</option>
-                        <option>T-Mobile</option>
-                    </select>
-                </li>
-            </ul>
-        </form>
-        <ul>
-            <li>
-                <button class="modal-button" id="addContactButton" value="add">Add</button>
-                <button class="modal-button" id="removeContactButton" value="remove">Remove</button>
-                <button class="modal-button" id="testContactButton" value="test">Test</button>
-            </li>
-        </ul>
-    </div>
-</div>
+
+
+
 
 
 </body>
