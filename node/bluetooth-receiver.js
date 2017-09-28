@@ -83,11 +83,9 @@ function readWriteData() {
     readChar.on('read', function(data, isNotification) {
         console.log(data.toString());
         if(isDatabaseConnected) {
-          var formattedDate = '';
-          formattedDate = '' + date.getYear().toString() + "-" + date.getMonth().toString() + "-" + date.getDay().toString() + " " + date.getHours().toString() + ":" + date.getMinutes().toString() + ":" + date.getSeconds().toString();
           var sql = "INSERT INTO temps (temp_datetime, temp_c_val, temp_series_name) VALUES ?";
           var values = [
-            [formattedDate, data.toString(), 'Temps']
+            [date.toISOString().replace(/T/, ' ').replace(/\..+/, ''), data.toString(), 'Temps']
           ];
           connection.query(sql, [values], function (err, result) {
             if (err) throw err;

@@ -73,27 +73,21 @@ void setup() {
 
 void loop() {
   //ledShowOff();
-//  // put your main code here, to run repeatedly:
-//  digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
-//  delay(500);                       // wait for a second
-//  digitalWrite(13, LOW);    // turn the LED off by making the voltage LOW
-//  delay(500);                       // wait for a second
-
-  // call sensors.requestTemperatures() to issue a global temperature 
+  
   // request to all devices on the bus 
   /********************************************************************/
    sensors.requestTemperatures(); // Send the command to get temperature readings
   /********************************************************************/
   float temperature = sensors.getTempCByIndex(0);
-  ledControl((byte)round(temperature), true);
+  // ledControl((byte)round(temperature), true);
 
    
    // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
   if (digitalRead(PUSH_BUTTON) == HIGH) {
-    ledShowOff();
-    // ledControl((byte)round(temperature), true);
+    // ledShowOff();
+    ledControl((byte)round(temperature), true);
   } else {
-    // ledControl((byte)round(temperature), false);
+    ledControl((byte)round(temperature), false);
   }
   ble.print("AT+BLEUARTTX=");
   ble.println(temperature);
@@ -113,7 +107,6 @@ void ledControl(byte temperature, bool pressed) {
   } else {
     if((temperature >> 0) & 1) digitalWrite(LED1, HIGH);
     else digitalWrite(LED1, LOW);
-    
     if((temperature >> 1) & 1) digitalWrite(LED2, HIGH);
     else digitalWrite(LED2, LOW);
     if((temperature >> 2) & 1) digitalWrite(LED3, HIGH);
