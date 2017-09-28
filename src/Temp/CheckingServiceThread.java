@@ -45,9 +45,9 @@ public class CheckingServiceThread implements Runnable {
         outOfRange = false;
 
         Connection con = ExDatabase.open();
-
+        System.out.println("Run Run Run!");
         while (runStatus) {
-            if(count%30==0) {
+            if(count%10==0) {
                 updateStatus(con);
             }
             if(count>1000000000){
@@ -65,6 +65,7 @@ public class CheckingServiceThread implements Runnable {
             count++;
 
         }
+
         ExDatabase.close(con);
     }
 

@@ -1,8 +1,16 @@
 $(function () {
 
-    $("lowTemp").text(function(){
+
+    $("#grafanaContainer").mouseup(function(){
+        console.log("Im here bitches!");
+        var iframe = document.getElementById("grafanaGraph");
+        iframe.src = iframe.src;
+    });
+
+    $("#lowTemp").text(function(){
 
     });
+
     $("#addPhone").click(function () {
         sendContact("add");
     });
@@ -15,34 +23,54 @@ $(function () {
     $("#testPhone").click(function(){
         sendContact("test");
     });
-    $("#ServiceOn").click(function(){
 
+    $("#serviceOn").click(function(){
+        sendService(1);
     });
-    $("#ServiceOff").click(function(){
 
+    $("#serviceOff").click(function(){
+        sendService(0);
     });
 
     $("#displayOn").click(function(){
-        //document.getElementById("displayOn").g
         sendDisplay(1);
     });
 
     $("#displayOff").click(function(){
         sendDisplay(0);
     });
+
     $("#updateHigh").click(function(){
         borderColor = "red";
         if(checkHighBounds()){
             borderColor ="green";
         }
     });
+
     $("#updateLow").click(function(){
         borderColor = "red";
         if(checkLowBounds()){
             borderColor ="green";
         }
     });
+
+    $("#currentC").click(function(){
+        $("#graphC").show();
+        $("#graphF").hide();
+    });
+
+    $("#currentF").click(function(){
+        $("#graphC").hide();
+        $("#graphF").show();
+    });
+
 });
+
+
+function sendService(val){
+    $.post("Temp.CheckingService","service="+val);
+}
+
 
 function sendDisplay(val){
     $.post("Device.Display","display="+val);
