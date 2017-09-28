@@ -39,7 +39,7 @@ public class Probe extends HttpServlet {
             probe = Controls.checkValue(con,Controls.ControlType.PROBE);
             ExDatabase.close(con);
         }catch(Exception ex){
-
+            System.out.println("Check Probe : " + ex.getMessage());
         }
         return probe;
     }
