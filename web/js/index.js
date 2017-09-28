@@ -44,7 +44,20 @@ $(function () {
     $("#ServiceOff").click(function(){
 
     })
+
+    $("#displayOn").click(function(){
+        //document.getElementById("displayOn").g
+        sendDisplay(1);
+    })
+
+    $("#displayOff").click(function(){
+        sendDisplay(0);
+    })
 });
+
+function sendDisplay(val){
+    $.post("Device.Display","display="+val);
+}
 
 function sendContact(action) {
     var info = "btn=" + action + "&";
