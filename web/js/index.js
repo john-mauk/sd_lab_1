@@ -1,21 +1,21 @@
 $(function () {
 
     $("#addPhone").click(function () {
-        sendInfo("add");
+        sendContact("add");
     });
 
     $("#removePhone").click(function () {
         if (confirm("Are you sure you want to remove info?")) {
-            sendInfo("remove");
+            sendContact("remove");
         }
     });
 
     $("#testPhone").click(function(){
-        sendInfo("test");
+        sendContact("test");
     })
 });
 
-function sendInfo(action) {
+function sendContact(action) {
     var info = "btn=" + action + "&";
     info += "p=" + document.getElementById("contact-modal-phone").value + "&";
     info += "c=" + document.getElementById("contact-modal-carrier").value;
