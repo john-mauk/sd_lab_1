@@ -1,32 +1,13 @@
 var noble = require('noble');
 
-var mysql      = require('mysql');
-var poolCluster = mysql.createPoolCluster();
-var date = new Date();
-var connection = mysql.createConnection({
-  // host     : 'ex-design.cfilhwe2swqf.us-west-2.rds.amazonaws.com',
-  // user     : 'johnny',
-  // password : 'Jamochame13',
-  // database : 'ex_design_database'
-
-  host: 'ex-design.cfilhwe2swqf.us-west-2.rds.amazonaws.com',
-  user: 'johnny',
-  password: '[Jamochame13]',
-  port: '3306',
-  database : 'ex_design_database'
-});
-
-var isDatabaseConnected = false;
-
 connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
-  }
-  isDatabaseConnected = true;
+    if(err) {
+        console.error('error connecting: ' + err.stack);
+        return;
+    }
+
+    console.log('connected as id' + connection.threadId);
 });
-
-
 
 var serviceUuid = '6e400001b5a3f393e0a9e50e24dcca9e';
 var readUuid = '6e400003b5a3f393e0a9e50e24dcca9e';
@@ -34,6 +15,7 @@ var writeUuid = '6e400002b5a3f393e0a9e50e24dcca9e';
 
 var readChar = null;
 var writeChar = null;
+var writeReady = false;
 
 noble.on('stateChange', function(state) {
   if (state === 'poweredOn') {
@@ -63,7 +45,8 @@ noble.on('discover', function(peripheral) {
                         });
                         if(readChar && writeChar) {
                             console.log('to readWriteData()');
-                            readWriteData();
+                            readData();
+                            writeReady = true;
                         }
                     });
                 });
@@ -79,21 +62,18 @@ noble.on('discover', function(peripheral) {
 // for the database, you need <temp_datetime>, <temp_c_val>, <temp_series_name>
 // example: <'yyyy-mm-dd hh:mm:ss'>, <13>, <(const) Temps>
 
-function readWriteData() {
+function readData() {
     readChar.on('read', function(data, isNotification) {
         console.log(data.toString());
-        if(isDatabaseConnected) {
-          var formattedDate = '';
-          formattedDate = '' + date.getYear().toString() + "-" + date.getMonth().toString() + "-" + date.getDay().toString() + " " + date.getHours().toString() + ":" + date.getMinutes().toString() + ":" + date.getSeconds().toString();
-          var sql = "INSERT INTO temps (temp_datetime, temp_c_val, temp_series_name) VALUES ?";
-          var values = [
-            [formattedDate, data.toString(), 'Temps']
-          ];
-          connection.query(sql, [values], function (err, result) {
-            if (err) throw err;
-            console.log("Number of records inserted: " + result.affectedRows);
-          });
-        }
+        poolCluster.add('temps', data.toString()); // add a named configuration
+    });
+}
+
+function writeData() {
+    pizzaBakeCharacteristic.write(, false, function(err) {
+      if (err) {
+        console.log('can\'t write data because: ' + err);
+      }
     });
     readChar.subscribe(function(err) {
         console.log('subscribed');

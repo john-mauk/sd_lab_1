@@ -24,6 +24,15 @@
 /********************************************************************/
 // Data wire is plugged into pin 2 on the Arduino 
 #define ONE_WIRE_BUS A1
+#define PUSH_BUTTON A0
+
+#define LED1 13
+#define LED2 12
+#define LED3 11
+#define LED4 10
+#define LED5 9
+#define LED6 6
+#define LED7 5
 /********************************************************************/
 // Setup a oneWire instance to communicate with any OneWire devices  
 // (not just Maxim/Dallas temperature ICs) 
@@ -43,43 +52,27 @@ void error(const __FlashStringHelper*err) {
 void setup() {
 //  // initialize digital pin LED_BUILTIN as an output.
 //  pinMode(13, OUTPUT);
+  ledShowOff();
 
   Serial.begin(115200);
-  Serial.println(F("Adafruit Bluefruit Command Mode Example"));
-  Serial.println(F("---------------------------------------"));
-
-  /* Initialise the module */
-  Serial.print(F("Initialising the Bluefruit LE module: "));
 
   if ( !ble.begin(VERBOSE_MODE) )
   {
-    error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
+    error(F("Couldn't find Bluefruit"));
   }
   Serial.println( F("OK!") );
 
   /* Disable command echo from Bluefruit */
   ble.echo(false);
 
-  Serial.println("Requesting Bluefruit info:");
-  /* Print Bluefruit information */
-  ble.info();
-
-  Serial.println(F("Please use Adafruit Bluefruit LE app to connect in UART mode"));
-  Serial.println(F("Then Enter characters to send to Bluefruit"));
-  Serial.println();
-
   ble.verbose(false);  // debug info is a little annoying after this point!
 
-  /* Wait for connection */
-  while (! ble.isConnected()) {
-      delay(500);
-  }
-
- // Start up the library
- sensors.begin();
+  // Start up the library
+  sensors.begin();
 }
 
 void loop() {
+  //ledShowOff();
 //  // put your main code here, to run repeatedly:
 //  digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
 //  delay(500);                       // wait for a second
@@ -91,11 +84,74 @@ void loop() {
   /********************************************************************/
    sensors.requestTemperatures(); // Send the command to get temperature readings
   /********************************************************************/
-   ble.print("AT+BLEUARTTX=");
-   ble.println((sensors.getTempCByIndex(0))); // Why "byIndex"? 
-   ble.print("AT+BLEUARTTX=");
-   ble.print("\n"); 
-   // You can have more than one DS18B20 on the same bus.  
-   // 0 refers to the first IC on the wire 
-   delay(1000);
+  float temperature = sensors.getTempCByIndex(0);
+  ledControl((byte)round(temperature), true);
+
+   
+   // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+  if (digitalRead(PUSH_BUTTON) == HIGH) {
+    ledShowOff();
+    // ledControl((byte)round(temperature), true);
+  } else {
+    // ledControl((byte)round(temperature), false);
+  }
+  ble.print("AT+BLEUARTTX=");
+  ble.println(temperature);
 }
+
+void ledControl(byte temperature, bool pressed) {
+  Serial.println(F("inside ledControl function"));
+  Serial.println(temperature);
+  if(!pressed) {
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, LOW);
+    digitalWrite(LED5, LOW);
+    digitalWrite(LED6, LOW);
+    digitalWrite(LED7, LOW);
+  } else {
+    if((temperature >> 0) & 1) digitalWrite(LED1, HIGH);
+    else digitalWrite(LED1, LOW);
+    
+    if((temperature >> 1) & 1) digitalWrite(LED2, HIGH);
+    else digitalWrite(LED2, LOW);
+    if((temperature >> 2) & 1) digitalWrite(LED3, HIGH);
+    else digitalWrite(LED3, LOW);
+    if((temperature >> 3) & 1) digitalWrite(LED4, HIGH);
+    else digitalWrite(LED4, LOW);
+    if((temperature >> 4) & 1) digitalWrite(LED5, HIGH);
+    else digitalWrite(10, LOW);
+    if((temperature >> 5) & 1) digitalWrite(LED6, HIGH);
+    else digitalWrite(LED6, LOW);
+    if((temperature >> 6) & 1) digitalWrite(LED7, HIGH);
+    else digitalWrite(LED7, LOW);
+  }
+  
+}
+
+void ledShowOff() {
+
+  digitalWrite(LED1, HIGH);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, HIGH);
+  delay(1000);
+  digitalWrite(LED2, LOW);
+  digitalWrite(LED3, HIGH);
+  delay(1000);
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  digitalWrite(LED4, LOW);
+  digitalWrite(LED5, HIGH);
+  delay(1000);
+  digitalWrite(LED5, LOW);
+  digitalWrite(LED6, HIGH);
+  delay(1000);
+  digitalWrite(LED6, LOW);
+  digitalWrite(LED7, HIGH);
+  delay(1000);
+  digitalWrite(LED7, LOW);
+}
+
