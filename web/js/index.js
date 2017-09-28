@@ -12,6 +12,14 @@ $(function () {
 
     $("#testPhone").click(function(){
         sendContact("test");
+    });
+
+    $("#displayOn").click(function(){
+        sendDisplay();
+    });
+
+    $("#displayOff").click(function(){
+        sendDisplay();
     })
 });
 
@@ -51,5 +59,12 @@ function sendHigh(){
 
 
 }//end sendHigh
+
+function sendDisplay(){
+    $.post("Device.Display");
+
+    console.log("Hello?");
+}
+
 
 

@@ -16,9 +16,12 @@ import java.util.concurrent.Executors;
 @WebServlet(name = "CheckingService")
 public class CheckingService extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        toggleCheckingService();
-        if(getCheckingServiceValue()==1){
-            startChecking();
+        int service = Integer.valueOf(request.getParameter("service"));
+        if(service!=getCheckingServiceValue()){
+            toggleCheckingService();
+            if(service==0){
+                startChecking();
+            }
         }
     }
 

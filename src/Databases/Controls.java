@@ -33,7 +33,6 @@ public class Controls {
         ControlType(String name){
             this.name = name;
         }
-
         public String getString(){
             return name;
         }
@@ -47,30 +46,32 @@ public class Controls {
         }catch(Exception ex){
             System.out.println("Toggle Display: "+ex.getMessage());
         }
+        System.out.println("Toggled Basics");
     }
 
     public static int checkValue(Connection con, ControlType type){
+        int value = 0;
         try{
             con.setAutoCommit(false);
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select control_val from controls where control_type="+type.getString());
-            rs.next();
+            ResultSet rs = stmt.executeQuery("Select * from controls where control_type='"+type.getString()+"'");
             if(rs.next()){
-                return rs.getInt("control_val");
+                value =  rs.getInt("control_val");
             }
             con.commit();
             stmt.close();
         }catch(Exception ex){
             System.out.println("Check Value for "+type+": "+ex.getMessage());
         }
-        return 0;
+        System.out.println(value);
+        return value;
     }
 
     public static void updateValue(Connection con, ControlType type, int value){
         try{
             con.setAutoCommit(false);
             Statement stmt = con.createStatement();
-            stmt.executeUpdate("Update control set control_val="+value+" WHERE control_type='"+type.getString()+"'");
+            stmt.executeUpdate("Update controls set control_val="+value+" WHERE control_type='"+type.getString()+"'");
             con.commit();
             stmt.close();
         }catch(Exception ex) {
