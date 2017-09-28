@@ -1,5 +1,6 @@
 $(function () {
 
+
     $("#addPhone").click(function () {
         sendContact("add");
     });
@@ -7,11 +8,41 @@ $(function () {
     $("#removePhone").click(function () {
         if (confirm("Are you sure you want to remove info?")) {
             sendContact("remove");
+            var phone = document.getElementById("contact-modal-phone").value.toString;
+            var carrier = document.getElementByID("contact-modal-carrier").value;
+
+            if (carrier !== "--Select Carrier--" && phone === "/[0-9]/" && (phone.length === 10)) {
+                document.getElementById("removeButton").disabled = false;
+            }
+            else{
+                document.getElementByID("removeButton").disabled = true;
+            }
         }
     });
 
     $("#testPhone").click(function(){
         sendContact("test");
+        var phone = document.getElementById("contact-modal-phone").value.toString;
+        var carrier = document.getElementByID("contact-modal-carrier").value;
+
+        if (carrier !== "--Select Carrier--" && phone === "/[0-9]/" && (phone.length === 10)) {
+            document.getElementById("testPhone").disabled = false;
+        }
+        else{
+            document.getElementByID("addPhone").disabled = true;
+        }
+    })
+    $("#displayOn").click(function(){
+
+    })
+    $("#displayOff").click(function(){
+
+    })
+    $("#ServiceOn").click(function(){
+
+    })
+    $("#ServiceOff").click(function(){
+
     })
 });
 
