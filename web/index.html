@@ -68,31 +68,23 @@ a
                 <p></p>
                 <p id="thresholdTitle">Temperature Threshold</p>
                 <p>High:</p>   <input type = "text" id = "highText" align = "left" name = "HighTemp" maxlength="4">
-                <button id="editHigh">edit</button>
+                <button id="editHigh">Edit</button>
                 <br>
                 <p>Low:</p>    <input type = "text" id= "lowText" align = "left" name = " LowTemp" maxlength="4">
-                <button id="editLow">edit</button>
+                <button id="editLow">Edit</button>
                 <br>
             </form>
         </li>
         <li>
             <form  class = Display onsubmit="return false">
-                <p>Display:</p>
-                <select id="displayControls" name = "controls" required>
-                    <option value="default" disabled selected>--ON/OFF--</option>
-                    <option>ON</option>
-                    <option>OFF</option>
-                </select>
+                <p></p>
+                <p>Display:  <button id="displayOn">ON</button> <button id="displayOff">OFF</button> </p>
             </form>
         </li>
         <li>
             <form  class = startService onsubmit="return false">
-                <p>Check Service:</p>
-                <select id="checkService" name = "startCheckService" required>
-                    <option value="default" disabled selected>--ON/OFF--</option>
-                    <option>ON</option>
-                    <option>OFF</option>
-                </select>
+                <p></p>
+                <p>Check Service: <button id="ServiceOn">ON</button> <button id="ServiceOff">OFF</button> </p>
             </form>
         </li>
 

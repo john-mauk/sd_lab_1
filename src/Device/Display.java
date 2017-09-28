@@ -14,8 +14,7 @@ import java.sql.Connection;
 @WebServlet("/Device.Display")
 public class Display extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     String displayOption = request.getParameter("displayFlag");
-     toggleForDisplay();
+         toggleForDisplay();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -15,7 +15,6 @@ $(function () {
     })
 });
 
-
 function sendInfo(action) {
     var info = "btn=" + action + "&";
     info += "p=" + document.getElementById("contact-modal-phone").value + "&";
@@ -37,5 +36,20 @@ function sendInfo(action) {
     );
     console.log("posted it");
 }
+function sendHigh(){
+    var tempH = document.getElementById("highText").value;
+    $.post("Temp.High",tempH, function(msg){
+        console.log(msg);
+        if(msg.length >0){
+        }
+        else{
+            console.log("Error: No value")
+        }
+
+    });
+
+
+
+}//end sendHigh
 
 
