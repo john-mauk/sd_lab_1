@@ -52,7 +52,9 @@ function sendContact(action) {
     var info = "btn=" + action + "&";
     info += "p=" + document.getElementById("contact-modal-phone").value + "&";
     info += "c=" + document.getElementById("contact-modal-carrier").value;
-    if(checkNum(parseInt(document.getElementById("contact-modal-phone").value))){
+    console.log("Phone number: "+ parseInt(document.getElementById("contact-modal-phone").value));
+    if(checkNum((document.getElementById("contact-modal-phone").value))){
+        console.log("Made it!");
         $.post("Contact.AddRemoveTest", info,
             function (msg) {
                 console.log(msg);
@@ -70,6 +72,7 @@ function sendContact(action) {
     }//end if
     else{
         alert("Invalid number, must enter a numeric value");
+        console.log("error");
     }
     console.log("posted it");
 }
@@ -115,10 +118,12 @@ function checkLowBounds(){
 }//end checkLowBounds
 function checkNum(value){
     console.log("value= " + value);
-    if(value.match(/[0-9]/)){
+    if(/[0-9]/.test(value)){
+        console.log("true");
         return true;
     }
     else{
+        console.log("false");
         return false;
     }
 }//end checkNum
