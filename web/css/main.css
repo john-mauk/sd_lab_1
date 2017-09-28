@@ -25,6 +25,14 @@
     p{
         color: #ffffff;
     }
+
+    iframe{
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+
+
+
     /*Attributes for #grafana-button*/
     #grafana-button {
         text-align: center;
@@ -36,7 +44,7 @@
         display: block;
     }
     /*Colors for #grafana-button, .nav-button, #editHigh, #editLow*/
-    #grafana-button,.nav-button,#updateHigh,#updateLow,#displayOn,#displayOff,#ServiceOff,#ServiceOn {
+    #grafana-button,.nav-button,#updateHigh,#updateLow,#displayOn,#displayOff,#serviceOff,#serviceOn,#currentC, #currentF {
         background-color: #008080;
         color: #ffffff;
     }
@@ -46,11 +54,27 @@
     }
     /*Attributes for .Display, .startService*/
     .Display,.startService {
-        diplay: block;
+        display: block;
         margin-right: 10px;
         box-sizing: border-box;
     }
     /*attributes for selectors*/
-    #displayControls,#checkService,#contact-modal-carrier,#highTemp,#lowTemp,#contact-modal-phone,#displayOn,#displayOff,#ServiceOff,#ServiceOn{
+    #displayControls,#checkService,#contact-modal-carrier,#highTemp,#lowTemp,#contact-modal-phone,#displayOn,#displayOff,#serviceOff,#serviceOn{
         font-size: 15px;
+    }
+
+
+    #grafanaContainer{
+        width:400px;
+        height:300px;
+        resize:both;
+        overflow:hidden;
+        background-color:#ffff99;
+        padding:5px;
+        margin: auto;
+    }
+
+    #grafanaGraph{
+        width:100%;
+        height:100%;
     }

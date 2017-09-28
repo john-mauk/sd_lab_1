@@ -13,13 +13,13 @@ import java.sql.Connection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@WebServlet(name = "CheckingService")
+@WebServlet("/Temp.CheckingService")
 public class CheckingService extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int service = Integer.valueOf(request.getParameter("service"));
         if(service!=getCheckingServiceValue()){
             toggleCheckingService();
-            if(service==0){
+            if(service==1){
                 startChecking();
             }
         }
@@ -39,7 +39,7 @@ public class CheckingService extends HttpServlet {
         }catch(Exception ex){
             System.out.println("Get Checking Service Val : " + ex.getMessage());
         }
-        return 0;
+        return value;
     }
 
     private static void toggleCheckingService(){
@@ -54,6 +54,7 @@ public class CheckingService extends HttpServlet {
 
     private static void startChecking(){
         try{
+            System.out.println("Starting Thread");
             Connection con = ExDatabase.open();
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.execute(new CheckingServiceThread());

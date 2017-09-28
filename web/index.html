@@ -9,14 +9,19 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
 
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script src="js/index.js"></script>
     <script src="js/CheckingToggles.js"></script>
 
 
 </head>
 <body>
-a
 <header>
     <a href="index.html" id="logo">
         <h1>Lab One: Temperature Sensor</h1>
@@ -24,17 +29,10 @@ a
 </header>
 <nav>
     <ul>
-        <!--
         <li>
-            <button class="nav-button">Connect Device</button>
-        </li>
-        -->
-        <li>
-            <a href="https://exdesignsolutions.grafana.net/dashboard/db/temp-sensor?refresh=1s&orgId=1" id="grafana">
-               <div style = "text-align:center;">
-                <button class="nav-button" id="grafana-button" >Grafana Graph</button>
-                </div>
-            </a>
+            <div id="grafanaContainer">
+                <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=1" id="grafanaGraph" frameborder="0" scrolling="no" ></iframe>
+            </div>
         </li>
         <li>
             <form id="contact-modal-form" onsubmit="return false">
@@ -63,7 +61,6 @@ a
                 <br>
             </form>
         </li>
-
         <li>
             <form class = TempThreshold onsubmit="return false">
                 <p></p>
@@ -78,23 +75,21 @@ a
             </form>
         </li>
         <li>
-            <form  class = Display onsubmit="return false">
-                <p></p>
-                <p>Display:  <button id="displayOn">ON</button> <button id="displayOff">OFF</button> </p>
-            </form>
+            <p></p>
+            <p>Display:  <button id="displayOn">ON</button> <button id="displayOff">OFF</button> </p>
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=13" width="450" height="200" frameborder="0" scrolling="no"></iframe>
         </li>
         <li>
-            <form  class = startService onsubmit="return false">
-                <p></p>
-                <p>Check Service: <button id="ServiceOn">ON</button> <button id="ServiceOff">OFF</button> </p>
-            </form>
+            <p></p>
+            <p>Text Alerts: <button id="serviceOn">ON</button> <button id="serviceOff">OFF</button> </p>
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=14" width="450" height="200" frameborder="0" scrolling="no"></iframe>
         </li>
-
-          <!--  <button class=""
+        <li>
+            <p></p>
+            <p>Temperature: <button id="currentC">Celsius</button> <button id="currentF">Fahrenheit</button></p>
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=12" id="graphC" width="450" height="200" frameborder="0" scrolling="no"></iframe>
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=15" id="graphF" width="450" height="200" frameborder="0" scrolling="no" style="display:none"></iframe>
         </li>
-        <!--<li>
-            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=1" width="450" height="500" frameborder="0"></iframe>
-        </li>-->
     </ul>
 </nav>
 
