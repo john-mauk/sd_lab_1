@@ -1,6 +1,8 @@
 $(function () {
 
+    $("lowTemp").text(function(){
 
+    });
     $("#addPhone").click(function () {
         sendContact("add");
     });
@@ -15,19 +17,31 @@ $(function () {
     });
     $("#ServiceOn").click(function(){
 
-    })
+    });
     $("#ServiceOff").click(function(){
 
-    })
+    });
 
     $("#displayOn").click(function(){
         //document.getElementById("displayOn").g
         sendDisplay(1);
-    })
+    });
 
     $("#displayOff").click(function(){
         sendDisplay(0);
-    })
+    });
+    $("#updateHigh").click(function(){
+        borderColor = "red";
+        if(checkHighBounds()){
+            borderColor ="green";
+        }
+    });
+    $("#updateLow").click(function(){
+        borderColor = "red";
+        if(checkLowBounds()){
+            borderColor ="green";
+        }
+    });
 });
 
 function sendDisplay(val){
@@ -72,27 +86,36 @@ function sendLow(){
     });
 }//end sendLow
 function checkHighBounds(){
-    var high =parseInt(document.getElementByID("highTemp").value);
-    if(checkNum(high) && high >-10 && high <=62){
-        console.log("high threshold temp acceptable.")
+    var high =parseInt(document.getElementById("highTemp").value);
+    console.log(checkNum(high.toString()));
+    console.log(high);
+    if(checkNum(high.toString()) && high >-10 && high <=62){
+        console.log("high threshold temp acceptable.");
+        return true;
     }
     else{
         console.log("high threshold temp failed");
         alert("Invalid High Threshold");
+        return false;
     }
 }//end checkHighBounds
 function checkLowBounds(){
-    var low = parseInt(document.getElementByID("lowTemp").value);
-    if(checkNum(low) && low >=-10 && low <62){
-        console.log("Temp threshold temp acceptable.")
+    var low =parseInt(document.getElementById("lowTemp").value);
+    console.log(checkNum(low.toString()));
+    console.log(low);
+    if(checkNum(low.toString()) && low >=-10 && low <62){
+        console.log("Temp threshold temp acceptable.");
+        return true;
     }
     else{
         console.log("Low threshold temp failed");
         alert("Invalid Low Threshold");
+        return false;
     }
 }//end checkLowBounds
 function checkNum(value){
-    if(value==="/[0-9]+/"){
+    console.log("value= " + value);
+    if(value.match(/[0-9]/)){
         return true;
     }
     else{
