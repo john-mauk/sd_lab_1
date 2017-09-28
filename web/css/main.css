@@ -36,7 +36,7 @@
         display: block;
     }
     /*Colors for #grafana-button, .nav-button, #editHigh, #editLow*/
-    #grafana-button,.nav-button,#editHigh,#editLow,#displayOn,#displayOff,#ServiceOff,#ServiceOn {
+    #grafana-button,.nav-button,#updateHigh,#updateLow,#displayOn,#displayOff,#ServiceOff,#ServiceOn {
         background-color: #008080;
         color: #ffffff;
     }
@@ -51,6 +51,6 @@
         box-sizing: border-box;
     }
     /*attributes for selectors*/
-    #displayControls,#checkService,#contact-modal-carrier,#highText,#lowText,#contact-modal-phone,#displayOn,#displayOff,#ServiceOff,#ServiceOn{
+    #displayControls,#checkService,#contact-modal-carrier,#highTemp,#lowTemp,#contact-modal-phone,#displayOn,#displayOff,#ServiceOff,#ServiceOn{
         font-size: 15px;
     }

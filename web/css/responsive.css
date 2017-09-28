@@ -3,7 +3,7 @@
     h1{
         font-size: 35px;
     }
-    p,#displayControls,#checkService,#contact-modal-carrier,#highText,#lowText,#contact-modal-phone{
+    p,#displayControls,#checkService,#contact-modal-carrier,#highTemp,#lowTemp,#contact-modal-phone{
         font-size:25px;
     }
     #thresholdTitle{
@@ -15,7 +15,7 @@
     h1{
         font-size: 20px;
     }
-    p,#displayControls,#checkService,#contact-modal-carrier,#highText,#lowText,#contact-modal-phone{
+    p,#displayControls,#checkService,#contact-modal-carrier,#highTemp,#lowTemp,#contact-modal-phone{
         font-size:15px;
     }
     #thresholdTitle{
@@ -27,7 +27,7 @@
     h1{
         font-size: 30px;
     }
-    p,#displayControls,#checkService,#contact-modal-carrier,#highText,#lowText,#contact-modal-phone{
+    p,#displayControls,#checkService,#contact-modal-carrier,#highTemp,#lowTemp,#contact-modal-phone{
         font-size:20px;
     }
     #thresholdTitle{
