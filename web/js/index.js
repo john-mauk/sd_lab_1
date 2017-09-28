@@ -12,14 +12,6 @@ $(function () {
 
     $("#testPhone").click(function(){
         sendContact("test");
-    });
-
-    $("#displayOn").click(function(){
-        sendDisplay();
-    });
-
-    $("#displayOff").click(function(){
-        sendDisplay();
     })
 });
 
@@ -45,26 +37,32 @@ function sendContact(action) {
     console.log("posted it");
 }
 function sendHigh(){
-    var tempH = document.getElementById("highText").value;
+    var tempH = "temp=" + document.getElementById("highTemp").value;
     $.post("Temp.High",tempH, function(msg){
         console.log(msg);
-        if(msg.length >0){
-        }
-        else{
-            console.log("Error: No value")
-        }
-
     });
-
-
-
 }//end sendHigh
-
-function sendDisplay(){
-    $.post("Device.Display");
-
-    console.log("Hello?");
-}
-
-
-
+function sendLow(){
+    var tempL = "temp=" + document.getElementById("lowTemp").value;
+    $.post("Temp.Low",tempL,function(msg){
+       console.log(msg);
+    });
+}//end sendLow
+function checkHighBounds(){
+    high = document.getElementByID("highTemp").value;
+    if(high = "/[0-9]/" && parseInt(high) >-10 && parseInt(high) <=62){
+        console.log("high threshold temp acceptable.")
+    }
+    else{
+        console.log("high threshold temp failed");
+    }
+}//end checkHighBounds
+function checkLowBounds(){
+    low = document.getElementByID("lowTemp").value;
+    if(low = "/[0-9]/" && parseInt(low) >=-10 && parseInt(high) <62){
+        console.log("Temp threshold temp acceptable.")
+    }
+    else{
+        console.log("Low threshold temp failed");
+    }
+}//end checkLowBounds
