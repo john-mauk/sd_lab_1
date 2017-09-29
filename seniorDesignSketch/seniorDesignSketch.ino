@@ -52,6 +52,7 @@ void error(const __FlashStringHelper*err) {
 void setup() {
 //  // initialize digital pin LED_BUILTIN as an output.
 //  pinMode(13, OUTPUT);
+
   ledShowOff();
 
   Serial.begin(115200);
@@ -81,6 +82,7 @@ void loop() {
   float temperature = sensors.getTempCByIndex(0);
   // ledControl((byte)round(temperature), true);
 
+  ble.info();
    
    // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
   if (digitalRead(PUSH_BUTTON) == HIGH) {
@@ -108,7 +110,7 @@ void ledControl(byte temperature, bool pressed) {
     digitalWrite(LED6, LOW);
     digitalWrite(LED7, LOW);
   } else {
-    temp = temperature + ((temperature >> 6) & 1) * 128;
+  temp = temperature + ((temperature >> 6) & 1) * 128;
 //    if(temperature > 0) {
 //      temp = temperature;
 //    } else {
