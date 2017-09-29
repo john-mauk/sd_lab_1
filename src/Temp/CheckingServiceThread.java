@@ -22,6 +22,12 @@ public class CheckingServiceThread implements Runnable {
     private static int high;
     private static boolean outOfRange;
     private static int lastAlert;
+    private static String highRange;
+    private static String lowRange;
+    private static String increase;
+    private static String decrease;
+    private static String stable;
+    private static String subject;
 
     public static void main(String[] args) {
         try {
@@ -88,26 +94,25 @@ public class CheckingServiceThread implements Runnable {
                             outOfRange = true;
                             lastAlert = temp;
                             if(temp<low){
-                                Contacts.sendTextMsg(con,"The temperature has decreased below range at "+temp, "Temp too low" );
+                                Contacts.sendTextMsg(con, textBuilder(lowRange,temp,lastAlert), "Temp too low" );
                                 System.out.println("Temp just became too low at "+temp);
                             }else{
-                                Contacts.sendTextMsg(con,"The temperature has increased above range at "+temp, "Temp too high");
+                                Contacts.sendTextMsg(con, textBuilder(highRange,temp,lastAlert), "Temp too high");
                                 System.out.println("Temp just became too high at "+temp);
                             }
                         }else{
                             if (temp < low && (lastAlert - temp) > 5) {
-                                Contacts.sendTextMsg(con,"The temperature has decreased from "+lastAlert+" to "+temp, "Temp too low" );
+                                Contacts.sendTextMsg(con, textBuilder(decrease,temp,lastAlert), "Temp decreased" );
                                 System.out.println("Temp is decreased from " + lastAlert + " to " + temp);
                             } else if (temp > high && (temp - lastAlert) > 5) {
-                                Contacts.sendTextMsg(con,"The temperature has increased from "+lastAlert+" to "+temp, "Temp too high");
+                                Contacts.sendTextMsg(con, textBuilder(increase,temp,lastAlert), "Temp increased");
                                 System.out.println("Temp increased from " + lastAlert + " to " + temp);
                             }
                         }
-
                         lastAlert = temp;
                     } else {
                         if (outOfRange) {
-                            Contacts.sendTextMsg(con,"The temperature is acceptable at "+temp, "Temp stabilized");
+                            Contacts.sendTextMsg(con, textBuilder(stable,temp,lastAlert), "Temp stabilized");
                             System.out.println("Temp is good at " + temp);
                             outOfRange = false;
                         }
@@ -117,14 +122,37 @@ public class CheckingServiceThread implements Runnable {
             stmt.close();
             con.commit();
         } catch (Exception ex) {
-            System.out.println("CheckTemps Error");
+            System.out.println("CheckTemps Error : " + ex.getMessage());
         }
     }
 
     private void updateStatus(Connection con){
         high = Controls.checkValue(con,Controls.ControlType.HIGH);
         low = Controls.checkValue(con,Controls.ControlType.LOW);
+        highRange = Controls.checkText(con,Controls.ControlType.HIGHRANGE);
+        lowRange = Controls.checkText(con, Controls.ControlType.LOWRANGE);
+        increase = Controls.checkText(con,Controls.ControlType.INCREASE);
+        decrease = Controls.checkText(con,Controls.ControlType.DECREASE);
+        subject = Controls.checkText(con,Controls.ControlType.SUBJECT);
+        stable = Controls.checkText(con,Controls.ControlType.STABLE);
         runStatus = Controls.checkValue(con, Controls.ControlType.CHECKINGSERVICE)==0?FALSE:TRUE;
+    }
+
+    private String textBuilder(String sentence, int current, int last){
+        String[][] values = new String[4][4];
+        values[0][0] = "[current]";
+        values[1][0] = "[low]";
+        values[2][0] = "[high]";
+        values[3][0] = "[last]";
+        values[0][1] = Integer.toString(current);
+        values[1][1] = Integer.toString(low);
+        values[2][1] = Integer.toString(high);
+        values[3][1] = Integer.toString(lastAlert);
+        for (String[] value : values) {
+            CharSequence cs = value[0];
+            sentence = sentence.replace(cs, value[1]);
+        }
+        return sentence;
     }
 
 }

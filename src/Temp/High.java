@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet("/Temp.High")
+@WebServlet(value="/Temp.High")
 public class High extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String high = request.getParameter("temp");
+
         if(high!=null){
             changeHigh(high);
         }

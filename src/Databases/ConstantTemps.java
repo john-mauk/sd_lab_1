@@ -14,8 +14,10 @@ public class ConstantTemps implements Runnable {
     private boolean keepRunning = true;
 
     public static void main(String[] args){
-        Connection connection = null;
+        //Connection connection = null;
         try {
+            //connection = ExDatabase.open();
+            //removeOldData(connection);
             ConstantTemps test = new ConstantTemps(true);
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.execute(test);
@@ -54,7 +56,7 @@ public class ConstantTemps implements Runnable {
                 }
             }
             if(new Date(current+5*3600000+(count-300)*1000).compareTo(new Date(System.currentTimeMillis()+5*3600000)) < 0){
-                constantRemoveOld(con,current,count-300);
+                constantRemoveOld(con,current,count-3000);
             }
 
             try {

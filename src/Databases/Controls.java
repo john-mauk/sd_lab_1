@@ -27,7 +27,14 @@ public class Controls {
         PROBE("Probe"),
         CHECKINGSERVICE("CheckingService"),
         HIGH("High"),
-        LOW("Low");
+        LOW("Low"),
+        HIGHRANGE("HighRange"),
+        LOWRANGE("LowRange"),
+        INCREASE("Increase"),
+        DECREASE("Decrease"),
+        STABLE("Stable"),
+        SUBJECT("Subject"),
+        ERROR("error");
 
         String name;
         ControlType(String name){
@@ -35,6 +42,15 @@ public class Controls {
         }
         public String getString(){
             return name;
+        }
+
+        public static ControlType getControlType(String name){
+            for(ControlType type : ControlType.values()){
+                if(type.name.equals(name)){
+                    return type;
+                }
+            }
+            return ERROR;
         }
     }
 
@@ -67,6 +83,24 @@ public class Controls {
         return value;
     }
 
+    public static String checkText(Connection con, ControlType type){
+        String text = "";
+        try{
+            con.setAutoCommit(false);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("Select * from controls where control_type='"+type.getString()+"'");
+            if(rs.next()){
+                text =  rs.getString("control_text");
+            }
+            con.commit();
+            stmt.close();
+        }catch(Exception ex){
+            System.out.println("Check Value for "+type+": "+ex.getMessage());
+        }
+        System.out.println(text);
+        return text;
+    }
+
     public static void updateValue(Connection con, ControlType type, int value){
         try{
             con.setAutoCommit(false);
@@ -78,4 +112,17 @@ public class Controls {
             System.out.println("Update Value for " + type + ": " + ex.getMessage());
         }
     }
+
+    public static void updateText(Connection con, ControlType type, String text){
+        try{
+            con.setAutoCommit(false);
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("Update controls set control_text='"+text+"' WHERE control_type='"+type.getString()+"'");
+            con.commit();
+            stmt.close();
+        }catch(Exception ex){
+            System.out.println("Update Text for " + type + ": " + ex.getMessage());
+        }
+    }
+
 }

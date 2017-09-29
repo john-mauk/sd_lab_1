@@ -20,6 +20,7 @@ public class CheckingService extends HttpServlet {
         if(service!=getCheckingServiceValue()){
             toggleCheckingService();
             if(service==1){
+                System.out.println("Starting checking service");
                 startChecking();
             }
         }

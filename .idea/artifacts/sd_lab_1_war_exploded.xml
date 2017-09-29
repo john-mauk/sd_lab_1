@@ -2,16 +2,16 @@
   <artifact type="exploded-war" build-on-make="true" name="sd_lab_1:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/sd_lab_1_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="sd_lab_1/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="sd_lab_1" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="javax.mail" />
-          <element id="library" level="project" name="mysql-connector-java-5.1.44-bin" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/javax.mail.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-5.1.44-bin.jar" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="sd_lab_1/web/Web" />
     </root>
   </artifact>
 </component>
