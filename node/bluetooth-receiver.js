@@ -2,7 +2,6 @@ var noble = require('noble');
 
 var mysql      = require('mysql');
 var poolCluster = mysql.createPoolCluster();
-var date = new Date();
 var connection = mysql.createConnection({
   // host     : 'ex-design.cfilhwe2swqf.us-west-2.rds.amazonaws.com',
   // user     : 'johnny',
@@ -34,6 +33,12 @@ var writeUuid = '6e400002b5a3f393e0a9e50e24dcca9e';
 
 var readChar = null;
 var writeChar = null;
+
+while(!isDatabaseConnected) {
+    var i = 0;
+}
+
+dataBaseDisconnected();
 
 noble.on('stateChange', function(state) {
   if (state === 'poweredOn') {
@@ -71,6 +76,7 @@ noble.on('discover', function(peripheral) {
         });
 
         peripheral.once("disconnect", function() {
+            dataBaseDisconnected();
             process.exit(0);
         });
     }
@@ -85,15 +91,34 @@ function readWriteData() {
         if(isDatabaseConnected) {
           var sql = "INSERT INTO temps (temp_datetime, temp_c_val, temp_series_name) VALUES ?";
           var values = [
-            [date.toISOString().replace(/T/, ' ').replace(/\..+/, ''), data.toString(), 'Temps']
+              [new Date().toISOString().replace(/T/, ' ').replace(/\..+/), data.toString(), 'Temps']
           ];
           connection.query(sql, [values], function (err, result) {
             if (err) throw err;
-            console.log("Number of records inserted: " + result.affectedRows);
           });
+
+          dataBaseConnected();
         }
     });
     readChar.subscribe(function(err) {
         console.log('subscribed');
     });
+}
+
+function dataBaseConnected() {
+    if(isDatabaseConnected) {
+      var sql = "UPDATE controls SET control_val='1' WHERE control_type='Probe'";
+      connection.query(sql, function (err, result) {
+        if (err) throw err;
+      });
+    }
+}
+
+function dataBaseDisconnected() {
+    if(isDatabaseConnected) {
+      var sql = "UPDATE controls SET control_val='0' WHERE control_type='Probe'";
+      connection.query(sql, function (err, result) {
+        if (err) throw err;
+      });
+    }
 }

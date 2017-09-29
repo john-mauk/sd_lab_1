@@ -91,12 +91,15 @@ void loop() {
   }
   ble.print("AT+BLEUARTTX=");
   ble.println(temperature);
+
+  delay(600);
 }
 
 void ledControl(byte temperature, bool pressed) {
   Serial.println(F("inside ledControl function"));
   Serial.println(temperature);
-  if(!pressed) {
+  int temp = temperature;
+  if(!pressed || temperature == 0) {
     digitalWrite(LED1, LOW);
     digitalWrite(LED2, LOW);
     digitalWrite(LED3, LOW);
@@ -105,22 +108,27 @@ void ledControl(byte temperature, bool pressed) {
     digitalWrite(LED6, LOW);
     digitalWrite(LED7, LOW);
   } else {
-    if((temperature >> 0) & 1) digitalWrite(LED1, HIGH);
+    temp = temperature + ((temperature >> 6) & 1) * 128;
+//    if(temperature > 0) {
+//      temp = temperature;
+//    } else {
+//      temp = 126 + temperature + 2;
+//    }
+    if((temp >> 0) & 1) digitalWrite(LED1, HIGH);
     else digitalWrite(LED1, LOW);
-    if((temperature >> 1) & 1) digitalWrite(LED2, HIGH);
+    if((temp >> 1) & 1) digitalWrite(LED2, HIGH);
     else digitalWrite(LED2, LOW);
-    if((temperature >> 2) & 1) digitalWrite(LED3, HIGH);
+    if((temp >> 2) & 1) digitalWrite(LED3, HIGH);
     else digitalWrite(LED3, LOW);
-    if((temperature >> 3) & 1) digitalWrite(LED4, HIGH);
+    if((temp >> 3) & 1) digitalWrite(LED4, HIGH);
     else digitalWrite(LED4, LOW);
-    if((temperature >> 4) & 1) digitalWrite(LED5, HIGH);
-    else digitalWrite(10, LOW);
-    if((temperature >> 5) & 1) digitalWrite(LED6, HIGH);
+    if((temp >> 4) & 1) digitalWrite(LED5, HIGH);
+    else digitalWrite(LED5, LOW);
+    if((temp >> 5) & 1) digitalWrite(LED6, HIGH);
     else digitalWrite(LED6, LOW);
-    if((temperature >> 6) & 1) digitalWrite(LED7, HIGH);
+    if((temp >> 6) & 1) digitalWrite(LED7, HIGH);
     else digitalWrite(LED7, LOW);
   }
-  
 }
 
 void ledShowOff() {
