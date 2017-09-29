@@ -3,11 +3,6 @@ var noble = require('noble');
 var mysql      = require('mysql');
 var poolCluster = mysql.createPoolCluster();
 var connection = mysql.createConnection({
-  // host     : 'ex-design.cfilhwe2swqf.us-west-2.rds.amazonaws.com',
-  // user     : 'johnny',
-  // password : 'Jamochame13',
-  // database : 'ex_design_database'
-
   host: 'ex-design.cfilhwe2swqf.us-west-2.rds.amazonaws.com',
   user: 'johnny',
   password: '[Jamochame13]',
@@ -34,9 +29,6 @@ var writeUuid = '6e400002b5a3f393e0a9e50e24dcca9e';
 var readChar = null;
 var writeChar = null;
 
-while(!isDatabaseConnected) {
-    var i = 0;
-}
 
 dataBaseDisconnected();
 
@@ -49,7 +41,10 @@ noble.on('stateChange', function(state) {
 });
 
 noble.on('discover', function(peripheral) {
-    if(peripheral.advertisement.localName === "Adafruit Bluefruit LE") {
+
+    // peripheral.id = "dfa4c6667ca14d778009d8675507813c";
+    if(peripheral.advertisement.localName === "Adafruit Bluefruit LE 60BD") {
+    // if(peripheral.id = "dfa4c6667ca14d778009d8675507813c") {
         peripheral.connect(function(error) {
             console.log("connected");
             noble.stopScanning();
