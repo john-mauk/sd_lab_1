@@ -16,6 +16,33 @@ $(function () {
         iframe.src = iframe.src;
     });
 
+    $("#highThresholdOverlay").click(function(){
+        document.getElementById("highTemp").style.visibility="visible";
+        document.getElementById("updateHigh").style.visibility="visible";
+
+    });
+
+    $("#lowThresholdOverlay").click(function(){
+        document.getElementById("lowTemp").style.visibility = "visible";
+        document.getElementById("updateLow").style.visibility = "visible";
+    });
+
+    $("#updateHigh").click(function(){
+        if(checkHighBounds()){
+            document.getElementById("highTemp").style.visibility = "hidden";
+            document.getElementById("updateHigh").style.visibility = "hidden";
+            sendHigh();
+        }
+    });
+
+    $("#updateLow").click(function(){
+        if(checkLowBounds()){
+            document.getElementById("lowTemp").style.visibility = "hidden";
+            document.getElementById("updateLow").style.visibility = "hidden";
+            sendLow();
+        }
+    });
+
     $("#addPhone").click(function () {
         sendContact("add");
     });
@@ -29,6 +56,10 @@ $(function () {
         sendContact("test");
     });
 
+    $("#serviceToggle").click(function(){
+        $.post("Temp.CheckingService");
+    });
+
     $("#serviceOn").click(function(){
         sendService(1);
     });
@@ -37,25 +68,13 @@ $(function () {
         sendService(0);
     });
 
-    $("#displayOn").click(function(){
-        sendDisplay(1);
+    $("#displayToggle").click(function(){
+        console.log("toggling display");
+        $.post("Device.Display");
     });
 
-    $("#displayOff").click(function(){
-        sendDisplay(0);
-    });
 
-    $("#updateHigh").click(function(){
-        if(checkHighBounds()){
-            sendHigh();
-        }
-    });
 
-    $("#updateLow").click(function(){
-        if(checkLowBounds()){
-            sendLow();
-        }
-    });
 
     $("#tempC").click(function(){
         celsius = true;
@@ -71,6 +90,8 @@ $(function () {
         sendTexts(this.value,document.getElementById(this.value).value);
     });
 });
+
+
 
 function reloadiFrames(){
     var list = document.getElementsByClassName("gpanel");
@@ -122,9 +143,7 @@ function convertToCelsius(temp){
 function sendService(val){
     $.post("Temp.CheckingService","service="+val);
 }
-function sendDisplay(val){
-    $.post("Device.Display","display="+val);
-}
+
 function sendContact(action) {
     var info = "btn=" + action + "&";
     info += "p=" + document.getElementById("contact-modal-phone").value + "&";

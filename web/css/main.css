@@ -1,7 +1,9 @@
     /*Attributes for body*/
     body {
-
+        height:100%;
+        width:1000px;
         background-color: black;
+        margin:auto;
     }
 
     /*Colors for h1*/
@@ -16,6 +18,7 @@
     }
     /*Attributes for p*/
     p {
+        display: inline-block;
         font-size: 10px;
         font-weight: bold;
         font-family: "Georgia", Georgia, serif;
@@ -30,6 +33,21 @@
         overflow-x: hidden;
     }
 
+    section{
+        height:100%;
+        width:100%;
+    }
+
+    button{
+        display: inline-block;
+    }
+
+    .block{
+        height:220px;
+        width:450px;
+        margin:auto;
+        display:inline-block;
+    }
 
 
     /*Attributes for #grafana-button*/
@@ -43,7 +61,7 @@
         display: block;
     }
     /*Colors for #grafana-button, .nav-button, #editHigh, #editLow*/
-    #grafana-button,.nav-button,#updateHigh,#updateLow,#displayOn,#displayOff,#serviceOff,#serviceOn,#currentC, #currentF {
+    button, #grafana-button,.nav-button,#updateHigh,#updateLow,#displayOn,#displayOff,#serviceOff,#serviceOn,#currentC, #currentF {
         background-color: #008080;
         color: #ffffff;
     }
@@ -77,4 +95,50 @@
         width:100%;
         height:100%;
         position:relative;
+    }
+
+    .togglePanel{
+        height:200px;
+        width:450px;
+        position:relative;
+        z-index:-1;
+
+    }
+
+    .overlayToggle{
+        display:inline-block;
+        height:200px;
+        width:450px;
+        position: absolute;
+        z-index:1;
+        background-color: transparent;
+    }
+
+    .gpanel{
+        display: inline-flex;
+        height:200px;
+        width:450px;
+        position:relative;
+
+    }
+
+    .twocolumns{
+        height:100%;
+        width:100%;
+        margin:auto;
+    }
+
+    #probePanel{
+        width:100%;
+        margin:auto;
+    }
+
+    #lowTemp,#updateLow,#highTemp,#updateHigh{
+        z-index:10;
+    }
+
+    #preference{
+        height: 100%;
+        width: 100%;
+        padding: 20%;
     }

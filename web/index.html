@@ -33,42 +33,81 @@
                     id="graphC" class="grafanaGraphs" width="450" height="200" frameborder="0" scrolling="no"></iframe>
             <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=23"
                     id="graphF" class="grafanaGraphs" width="450" height="200" frameborder="0" scrolling="no"></iframe>
-
         </div>
     </div>
-    <div>
-        <br><br>
-        <p>Temperature:
-            <button id="tempC">Celsius</button>
-            <button id="tempF">Fahrenheit</button>
-        </p>
+    <br>
+    <br>
+    <div class="twocolumns">
+        <div class="block">
+            <div id="preference">
+                <p>Temperature:
+                    <br>
+                    <button id="tempC" >Celsius</button>
+                    <br>
+                    <button id="tempF">Fahrenheit</button>
+                </p>
+            </div>
+        </div>
+        <div id="currentTemp" class="block">
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=12"
+                    class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=15"
+                    class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no"
+                    style="display:none"></iframe>
+        </div>
     </div>
-    <div>
-        <p>Current</p>
-        <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=12"
-                class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
-        <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=15"
-                class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no"
-                style="display:none"></iframe>
+    <div class="twocolumns">
+        <div id="minTemp" class="block">
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=10"
+                    class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=20"
+                    class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no" style="display:none"></iframe>
+        </div>
+        <div id="maxTemp" class="block">
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=11"
+                    class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
+
+            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=21"
+                    class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no" style="display:none"></iframe>
+        </div>
     </div>
-    <div>
-        <p>Min</p>
-        <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=10"
-                class="degreesC gpanel" width="450" height="200" frameborder="0"></iframe>
-        <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=20"
-                class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no" style="display:none"></iframe>
+    <div >
+        <form class=TempThreshold onsubmit="return false">
+            <div class="block">
+                <div class="overlayToggle" id="lowThresholdOverlay">
+                    <input type="text" id="lowTemp" align="left" name=" lowTemp" maxlength="3" size="10" style="visibility: hidden">
+                    <br>
+                    <button id="updateLow" style="visibility: hidden">Update</button>
+                </div>
+                <div id="lowThreshold" class="block">
+                <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=18"
+                        class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
+                <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=19"
+                        class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </div>
+            <div class="block">
+                <div class="overlayToggle" id="highThresholdOverlay">
+                    <input type="text" id="highTemp" align="left" name="highTemp" maxlength="3" size="10" style="visibility: hidden">
+                    <br>
+                    <button id="updateHigh" style="visibility: hidden">Update</button>
+                </div>
+                <div id="highThreshold" class="block">
+                    <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=16"
+                        class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
+                    <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=17"
+                        class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
+
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <p>Max</p>
 
-        <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=11"
-                class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
-
-        <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=21"
-                class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no" style="display:none"></iframe>
-
-
+    <div id="probePanel" class="block">
+        <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=22"
+                width="600" height="200" frameborder="0" scrolling="no"></iframe>
     </div>
+
     <div>
         <form id="contact-modal-form" onsubmit="return false">
             <ul>
@@ -97,93 +136,57 @@
             <br>
         </form>
     </div>
-    <div>
-        <form class=TempThreshold onsubmit="return false">
-            <p></p>
-            <p></p>
-            <p id="thresholdTitle">Temperature Threshold</p>
-            <p>High:</p>   <input type="text" id="highTemp" align="left" name="highTemp" maxlength="4">
-            <button id="updateHigh">Update</button>
-            <br>
-            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=16"
-                    class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
-            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=17"
-                    class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
 
-            <p>Low:</p>    <input type="text" id="lowTemp" align="left" name=" lowTemp" maxlength="4">
-            <button id="updateLow">Update</button>
-            <br>
-            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=18"
-                    class="degreesC gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
-            <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=19"
-                    class="degreesF gpanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
-        </form>
-    </div>
-    <div>
-        <p></p>
-        <p>Display:
-            <button id="displayOn">ON</button>
-            <button id="displayOff">OFF</button>
-        </p>
+    <div class="block">
+        <div class="overlayToggle" id="displayToggle"></div>
         <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=13"
-                width="450" height="200" frameborder="0" scrolling="no"></iframe>
+                class="togglePanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
     </div>
-    <div>
-        <p></p>
-        <p>Text Alerts:
-            <button id="serviceOn">ON</button>
-            <button id="serviceOff">OFF</button>
-        </p>
+    <div class="block">
+        <div class="overlayToggle" id="serviceToggle"></div>
         <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=14"
-                width="450" height="200" frameborder="0" scrolling="no"></iframe>
+                class="togglePanel" width="450" height="200" frameborder="0" scrolling="no"></iframe>
     </div>
 
     <div>
-        <p>
-            Subject :
-            <input type="text" id="Subject" align="left" name="Subject" maxlength="20">
-            <button class="textMessage" id="updateSubject" value="Subject">Update</button>
-        </p>
-        <br>
         <p>Temperature Out Of Range</p>
+        <br>
         <p>
             High Threshold:
-            <input type="text" id="HighRange" align="left" name="HighRange" maxlength="120">
+            <input type="text" id="HighRange" align="left" name="HighRange" maxlength="120" size="60">
             <button class="textMessage" id="updateHighRange" value="HighRange">Update</button>
         </p>
+        <br>
         <p>
             Low Threshold:
-            <input type="text" id="LowRange" align="left" name="LowRange" maxlength="120">
+            <input type="text" id="LowRange" align="left" name="LowRange" maxlength="120" size="60">
             <button class="textMessage" id="updateLowRange" value="LowRange">Update</button>
         </p>
         <br>
+        <br>
         <p>Temperature Changes</p>
+        <br>
         <p>
             Increases:
-            <input type="text" id="Increase" align="left" name="Increase" maxlength="120">
+            <input type="text" id="Increase" align="left" name="Increase" maxlength="120" size="60">
             <button class="textMessage" id="updateIncrease" value="Increase">Update</button>
         </p>
+        <br>
         <p>
             Decreases:
-            <input type="text" id="Decrease" align="left" name="Decrease" maxlength="120">
+            <input type="text" id="Decrease" align="left" name="Decrease" maxlength="120" size="60">
             <button class="textMessage" id="updateDecrease" value="Decrease">Update</button>
         </p>
         <br>
+        <br>
         <p>Temperature Stabilizes</p>
+        <br>
         <p>
             Stabilizes:
-            <input type="text" id="Stable" align="left" name="Stable" maxlength="120">
+            <input type="text" id="Stable" align="left" name="Stable" maxlength="120" size="60">
             <button class="textMessage" id="updateStable" value="Stable">Update</button>
         </p>
     </div>
-    <div>
-        <p>Temperature Sensor</p>
-        <iframe src="https://exdesignsolutions.grafana.net/dashboard-solo/db/temp-sensor?refresh=1s&orgId=1&panelId=22"
-                width="450" height="200" frameborder="0" scrolling="no"></iframe>
-
-    </div>
 </section>
-
-
 </body>
 </html>

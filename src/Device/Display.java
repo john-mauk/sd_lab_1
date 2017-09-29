@@ -14,10 +14,12 @@ import java.sql.Connection;
 @WebServlet("/Device.Display")
 public class Display extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int display = Integer.valueOf(request.getParameter("display"));
-        if(display!=getDisplay()) {
+        //int display = Integer.valueOf(request.getParameter("display"));
+        toggleForDisplay();
+        System.out.println("Toggled Display");
+        /*if(display!=getDisplay()) {
             toggleForDisplay();
-        }
+        }*/
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
