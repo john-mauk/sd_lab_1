@@ -14,10 +14,18 @@ The software should be loaded on chip. Just plug in the LiPo battery or turn on 
 ### Node.js
 First, use command line and go to the folder where "node" is located. If you are running for the first time, then several npm library needs to be installed.
 Run:
-```{r} npm install noble ```
+```{r}
+npm install noble
+```
 Then:
-```{r} npm install mysql ```
+```{r}
+npm install mysql
+```
 Finally, under command line, for MacOS type
-```{r} node bluetooth-receiver.js ```
+```{r}
+node bluetooth-receiver.js
+```
 or for Linux, run
-```{r} nodejs bluetooth-receiver.js ```
+```{r}
+nodejs bluetooth-receiver.js
+```
