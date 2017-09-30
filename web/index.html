@@ -123,6 +123,7 @@
                 class="togglePanael " width="450" height="200" frameborder="0" scrolling="no"></iframe>
     </div>
     <div>
+        <br>
         <form id="contact-modal-form" onsubmit="return false">
             <ul>
                 <li>
@@ -188,6 +189,60 @@
             <input type="text" id="Stable" align="left" name="Stable" maxlength="120" size="60">
             <button class="textMessage" id="updateStable" value="Stable">Update</button>
         </p>
+        <br>
+        <br>
+        <br>
+        <p>----------------------------------------------------------------------------------------------------------------------</p>
+        <br>
+        <br>
+        <br>
+        <p>
+            USER INSTRUCTIONS:
+
+            The graph displays the values stored in the database for the temperature sensor. The corner of the graph can
+            be dragged to increase in size. The current value is shown in a box below labeled "Current". The maximum and
+            minimum values recorded during the last 5 minutes is also present. The user also has the ability to change
+            the units to Fahrenheit by selecting Fahrenheit under Temperature. The max and min thresholds display the
+            outer range of the acceptable temperatures. WHen the temperature is outside of this range, text alerts may be
+            set up to notify the user. These threshold values can be changed by clicking the panel.
+
+            The Display panel features a toggle on or off button that is connected to the temperature sensor's probe.
+
+            The Text Alerts panel acts as the toggle switch to activate text alerts or disable them.
+
+            Temp Simulator was a last minute addition that allows random sparatic data to be submitted to the database.
+            This allows quick testing if the text messaging is adequate for the user as well as a visual to how the panels
+            will react to a constant stream of data.
+
+            Lastly, the Probe panel tells the user if the probe is connected or not to the box.
+        </p>
+        <br>
+        <br>
+        <p>
+            PHONE NUMBERS AND TEXT MESSAGES:
+
+            The text message alert system allows the monitoring of the temperature readings from the sensor without
+            having to be present. This can be very useful for a control systems engineering system that requires constant
+            monitoring.
+
+            Phone numbers and their respective carrier can be added to the system to retrieve text alerts. The numbers
+            are stored in a database and thus more than one phone may receive these alerts.
+
+            There are five text messages that can be modified to the users liking. This allows a wide variety of
+            customization depending on the application of the temperature sensor. The key messages are for when the
+            temperature first becomes out of range. Then for every 5C further it goes out of range another text is sent.
+            For more detailed alerts, the ability to write place holders for key values has been added. The following can
+            be placed and their respective value will be written in their place when the message is created.
+
+            [current] = current temperature value at the time of the alert
+            [last] = previous temperature when the last alert was sent
+            [high] = high temperature threshold value
+            [low]  = low temperature threshold value
+
+            An example message would be: "The current temp is [current] and it has risen above [high]". This would
+            send a text that would resemble "The current temp is 45 and it has risen above 60"
+        </p>
+        <br>
     </div>
 </section>
 </body>
