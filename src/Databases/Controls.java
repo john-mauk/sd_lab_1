@@ -33,7 +33,7 @@ public class Controls {
         INCREASE("Increase"),
         DECREASE("Decrease"),
         STABLE("Stable"),
-        SUBJECT("Subject"),
+        TEMPSIM("TempSim"),
         ERROR("error");
 
         String name;

@@ -114,6 +114,8 @@
         background-color: transparent;
     }
 
+
+
     .gpanel{
         display: inline-flex;
         height:200px;
@@ -141,4 +143,10 @@
         height: 100%;
         width: 100%;
         padding: 20%;
+    }
+
+    .triple{
+        height:200px;
+        width: 300px;
+        margin: auto;
     }

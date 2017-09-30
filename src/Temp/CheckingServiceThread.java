@@ -133,7 +133,6 @@ public class CheckingServiceThread implements Runnable {
         lowRange = Controls.checkText(con, Controls.ControlType.LOWRANGE);
         increase = Controls.checkText(con,Controls.ControlType.INCREASE);
         decrease = Controls.checkText(con,Controls.ControlType.DECREASE);
-        subject = Controls.checkText(con,Controls.ControlType.SUBJECT);
         stable = Controls.checkText(con,Controls.ControlType.STABLE);
         runStatus = Controls.checkValue(con, Controls.ControlType.CHECKINGSERVICE)==0?FALSE:TRUE;
     }

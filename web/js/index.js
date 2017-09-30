@@ -16,6 +16,10 @@ $(function () {
         iframe.src = iframe.src;
     });
 
+    $("#tempSimToggle").click(function(){
+        $.post("Temp.Simulator");
+    });
+
     $("#highThresholdOverlay").click(function(){
         document.getElementById("highTemp").style.visibility="visible";
         document.getElementById("updateHigh").style.visibility="visible";

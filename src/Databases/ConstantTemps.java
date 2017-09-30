@@ -9,6 +9,9 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public class ConstantTemps implements Runnable {
 
     private boolean keepRunning = true;
@@ -65,6 +68,7 @@ public class ConstantTemps implements Runnable {
                 System.err.println("While sleeping: " + ex.getClass().getName() + ": " + ex.getMessage());
                 System.exit(0);
             }
+            keepRunning = (Controls.checkValue(con,Controls.ControlType.TEMPSIM)==1)? TRUE:FALSE;
         }
         ExDatabase.close(con);
     }
@@ -142,5 +146,7 @@ public class ConstantTemps implements Runnable {
         }
         return removed;
     }
+
+
 
 }
